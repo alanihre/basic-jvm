@@ -14,7 +14,7 @@
 
 class StringPool {
 private:
-    std::unordered_map<std::string, int> map;
+    std::unordered_map<std::string, ObjectRef> map;
     ObjectPool *objectPool;
     ClassFileLookup *classFileLookup;
     ClassInstantiator *classInstantiator;

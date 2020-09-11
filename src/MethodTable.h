@@ -31,6 +31,8 @@ private:
 public:
     explicit MethodTable(ClassFile *classFile);
 
+    ~MethodTable();
+
     Method *getMethod(const std::string &signature);
 };
 

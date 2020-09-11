@@ -88,10 +88,8 @@ public:
 };
 
 
-inline ClassFile *readClassFile(const char *file, ClassFileLookup *classFileLookup) {
+inline void readClassFile(const char *file, ClassFileLookup *classFileLookup,  ClassFile *classFile) {
     ENDIANNESS endian = CheckArchEndianalityV1();
-
-    auto *classFile = new ClassFile;
 
     std::fstream fh;
     fh.open(file, std::fstream::in | std::fstream::binary);
@@ -222,9 +220,8 @@ inline ClassFile *readClassFile(const char *file, ClassFileLookup *classFileLook
 
         fieldInfo.attributes = new attribute_info[fieldInfo.attributes_count];
         for (int j = 0; j < fieldInfo.attributes_count; ++j) {
-            auto *attributeInfo = new attribute_info;
+            auto *attributeInfo = &fieldInfo.attributes[j];
             parseAttributeInfo(attributeInfo, classFile->constant_pool, &fh, endian);
-            fieldInfo.attributes[j] = *attributeInfo;
         }
 
         classFile->fields[i] = fieldInfo;
@@ -244,9 +241,8 @@ inline ClassFile *readClassFile(const char *file, ClassFileLookup *classFileLook
 
         methodInfo.attributes = new attribute_info[methodInfo.attributes_count];
         for (int j = 0; j < methodInfo.attributes_count; ++j) {
-            auto *attributeInfo = new attribute_info;
+            auto *attributeInfo = &methodInfo.attributes[j];
             parseAttributeInfo(attributeInfo, classFile->constant_pool, &fh, endian);
-            methodInfo.attributes[j] = *attributeInfo;
         }
 
         classFile->methods[i] = methodInfo;
@@ -286,8 +282,6 @@ inline ClassFile *readClassFile(const char *file, ClassFileLookup *classFileLook
 
         classFile->superClassFile = classFileLookup->getClassFile(std::string(superClassName));
     }
-
-    return classFile;
 }
 
 #endif //LAB7_CLASSFILEREADER_H

@@ -51,7 +51,6 @@ void MethodRunner::jump(int jumpAddr) {
 }
 
 void MethodRunner::handleReturn() {
-    delete[] locals;
     shouldReturn = true;
 }
 
@@ -983,4 +982,8 @@ int MethodRunner::calculateJumpAddress() {
     //-2 for the two branch bytes and -1 since pc was increased by 1 during the call to next
     int jumpAddr = pc + jumpOffset - 2 - 1;
     return jumpAddr;
+}
+
+MethodRunner::~MethodRunner() {
+    delete[] locals;
 }

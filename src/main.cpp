@@ -47,6 +47,7 @@ int main(int argc, char *argv[]) {
     methodRunner.run();
 
     delete[] args;
+    delete operandStack;
 
     return 0;
 }

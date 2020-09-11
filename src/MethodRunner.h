@@ -26,6 +26,8 @@ public:
                  const int *args, StringPool *stringPool, ObjectPool *objectPool, ClassInstantiator *classInstantiator,
                  ClassFileLookup *classFileLookup);
 
+    ~MethodRunner();
+
     void run();
 
 protected:

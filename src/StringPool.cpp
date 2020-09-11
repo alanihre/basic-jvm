@@ -32,7 +32,7 @@ int StringPool::getStringInstanceRef(const std::string &value) {
 
         stringObject->putField(0, arrayRef);
 
-        map.insert(std::pair<std::string, int>(value, objectRef));
+        map.insert(std::pair<std::string, ObjectRef>(value, objectRef));
         return objectRef;
     }
 }

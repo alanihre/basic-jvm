@@ -15,19 +15,25 @@ Field *FieldTable::getField(const std::string &name) {
 
 FieldTable::FieldTable(ClassFile *classFile) {
     for (int i = 0; i < classFile->fields_count; ++i) {
-        field_info fieldInfo = classFile->fields[i];
+        field_info *fieldInfo = &classFile->fields[i];
 
         auto *field = new Field();
-        field->accessFlags = fieldInfo.access_flags;
+        field->accessFlags = fieldInfo->access_flags;
         field->name = std::string(
-                (char *) ((CONSTANT_Utf8_info *) classFile->constant_pool[fieldInfo.name_index - 1].info)->bytes);
+                (char *) ((CONSTANT_Utf8_info *) classFile->constant_pool[fieldInfo->name_index - 1].info)->bytes);
         field->descriptor = std::string(
-                (char *) ((CONSTANT_Utf8_info *) classFile->constant_pool[fieldInfo.descriptor_index - 1].info)->bytes);
+                (char *) ((CONSTANT_Utf8_info *) classFile->constant_pool[fieldInfo->descriptor_index - 1].info)->bytes);
 
         field->classFile = classFile;
 
         field->index = i;
 
         map.insert(std::pair<std::string, Field *>(field->name, field));
+    }
+}
+
+FieldTable::~FieldTable() {
+    for(auto & elem : map) {
+        delete elem.second;
     }
 }

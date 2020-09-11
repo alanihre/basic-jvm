@@ -17,6 +17,8 @@ public:
 
     ClassInstance() = default;
 
+    ~ClassInstance();
+
     void initializeObject(ClassFile *classFile, ClassInstance *parentInstance);
 
     void initializeArray(ClassFile *classFile, int size);

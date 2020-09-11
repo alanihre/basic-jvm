@@ -19,18 +19,25 @@ inline bool fileExists(const char *fileName) {
 
 ClassFile *ClassFileLookup::getClassFile(const std::string &className) {
     if (map.find(className) == map.end()) {
-        ClassFile *classFile = loadClassFile(className);
+        auto *classFile = new ClassFile{};
+        loadClassFile(className, classFile);
         insertClassFile(className, classFile);
         return classFile;
     }
     return map[className];
 }
 
-ClassFile *ClassFileLookup::loadClassFile(const std::string &className) {
+void ClassFileLookup::loadClassFile(const std::string &className, ClassFile *classFile) {
     std::string fileNameString = className + ".class";
     const char *fileName = fileNameString.c_str();
     if (!fileExists(fileName)) {
         throw ClassFileNotFoundException();
     }
-    return readClassFile(fileName, this);
+    return readClassFile(fileName, this, classFile);
+}
+
+ClassFileLookup::~ClassFileLookup() {
+    for(auto & elem : map) {
+        delete elem.second;
+    }
 }

@@ -58,3 +58,7 @@ void ClassInstance::putArrayElement(int index, int value) {
     }
     instanceData[index + 1] = value;
 }
+
+ClassInstance::~ClassInstance() {
+    free(instanceData);
+}

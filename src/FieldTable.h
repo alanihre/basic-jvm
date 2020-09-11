@@ -30,6 +30,8 @@ private:
 public:
     explicit FieldTable(ClassFile *classFile);
 
+    ~FieldTable();
+
     Field *getField(const std::string &signature);
 };
 
