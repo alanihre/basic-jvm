@@ -12,11 +12,12 @@
 class ClassFileLookup {
 private:
     std::unordered_map<std::string, ClassFile *> map;
+    std::string classIncludePath;
 
     void loadClassFile(const std::string &className, ClassFile *classFile);
 
 public:
-    ClassFileLookup();
+    ClassFileLookup(std::string classIncludePath);
     ~ClassFileLookup();
 
     void insertClassFile(const std::string &className, ClassFile *classFile);

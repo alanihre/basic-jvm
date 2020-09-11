@@ -11,9 +11,15 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    std::string classIncludePath;
+    if(const char* path = std::getenv("SIMPLE_JVM_INCLUDE_PATH")) {
+        classIncludePath = path;
+        classIncludePath.append("/");
+    }
+
     std::string mainClassName = std::string(argv[1]);
 
-    ClassFileLookup classFileLookup;
+    ClassFileLookup classFileLookup(classIncludePath);
 
     auto *operandStack = new std::stack<int>;
 
@@ -24,7 +30,6 @@ int main(int argc, char *argv[]) {
     StringPool stringPool = StringPool(&objectPool, &classFileLookup, &classInstantiator);
 
     loadBuiltinClasses(&classFileLookup, &objectPool, &classInstantiator);
-
 
     ClassFile *mainClass = classFileLookup.getClassFile(mainClassName);
 

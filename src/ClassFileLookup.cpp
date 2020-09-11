@@ -6,7 +6,11 @@
 #include "ClassFileReader.h"
 #include <sys/stat.h>
 
-ClassFileLookup::ClassFileLookup() = default;
+#include <utility>
+
+ClassFileLookup::ClassFileLookup(std::string classIncludePath) {
+    this->classIncludePath = std::move(classIncludePath);
+};
 
 void ClassFileLookup::insertClassFile(const std::string &className, ClassFile *classFile) {
     map.insert(std::pair<std::string, ClassFile *>(className, classFile));
@@ -31,7 +35,12 @@ void ClassFileLookup::loadClassFile(const std::string &className, ClassFile *cla
     std::string fileNameString = className + ".class";
     const char *fileName = fileNameString.c_str();
     if (!fileExists(fileName)) {
-        throw ClassFileNotFoundException();
+        std::string includePathFile = (classIncludePath + fileName);
+        if (fileExists(includePathFile.c_str())) {
+            fileName = includePathFile.c_str();
+        } else {
+            throw ClassFileNotFoundException();
+        }
     }
     return readClassFile(fileName, this, classFile);
 }
