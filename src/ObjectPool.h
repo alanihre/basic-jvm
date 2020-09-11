@@ -17,22 +17,25 @@ typedef int ObjectRef;
 
 class ObjectPool {
 private:
-    ClassInstance* objects;
+    ClassInstance *objects;
     int size;
     int capacity;
+
     void increaseSizeIfRequired();
 
 public:
     ObjectPool();
+
     ~ObjectPool();
+
     int newObjectRef();
-    ClassInstance* getObject(int ref);
+
+    ClassInstance *getObject(int ref);
 };
 
-class InvalidObjectReferenceException: public std::exception
-{
+class InvalidObjectReferenceException : public std::exception {
 public:
-    virtual const char* what() const throw() {
+    virtual const char *what() const throw() {
         return "Invalid object reference";
     }
 };

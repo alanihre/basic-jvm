@@ -21,7 +21,8 @@ private:
 
 public:
     explicit StringPool(ObjectPool *objectPool, ClassFileLookup *classFileLookup, ClassInstantiator *classInstantiator);
-    int getStringInstanceRef(const std::string& value);
+
+    int getStringInstanceRef(const std::string &value);
 };
 
 

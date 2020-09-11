@@ -4,7 +4,7 @@
 
 #include "MethodTable.h"
 
-Method* MethodTable::getMethod(const std::string& signature) {
+Method *MethodTable::getMethod(const std::string &signature) {
     auto it = map.find(signature);
     if (it != map.end()) {
         return it->second;
@@ -13,7 +13,7 @@ Method* MethodTable::getMethod(const std::string& signature) {
     }
 }
 
-int countArguments(const std::string& methodDescriptor) {
+int countArguments(const std::string &methodDescriptor) {
     int count = 0;
 
     auto it = methodDescriptor.cbegin();
@@ -51,17 +51,21 @@ int countArguments(const std::string& methodDescriptor) {
 MethodTable::MethodTable(ClassFile *classFile) {
     for (int i = 0; i < classFile->methods_count; ++i) {
         method_info methodInfo = classFile->methods[i];
-        
-        auto* method = new Method();
+
+        auto *method = new Method();
         method->accessFlags = methodInfo.access_flags;
-        method->name = std::string((char *)((CONSTANT_Utf8_info*) classFile->constant_pool[methodInfo.name_index - 1].info)->bytes);
-        method->descriptor = std::string((char *)((CONSTANT_Utf8_info*) classFile->constant_pool[methodInfo.descriptor_index - 1].info)->bytes);
+        method->name = std::string(
+                (char *) ((CONSTANT_Utf8_info *) classFile->constant_pool[methodInfo.name_index - 1].info)->bytes);
+        method->descriptor = std::string(
+                (char *) ((CONSTANT_Utf8_info *) classFile->constant_pool[methodInfo.descriptor_index -
+                                                                          1].info)->bytes);
 
         for (int j = 0; j < methodInfo.attributes_count; ++j) {
             attribute_info attributeInfo = methodInfo.attributes[j];
-            char* attrName = (char*)((CONSTANT_Utf8_info*)classFile->constant_pool[attributeInfo.attribute_name_index - 1].info)->bytes;
+            char *attrName = (char *) ((CONSTANT_Utf8_info *) classFile->constant_pool[
+                    attributeInfo.attribute_name_index - 1].info)->bytes;
             if (strcmp(attrName, ATTRIBUTE_TYPE_CODE) == 0) {
-                method->codeAttribute = (Code_attribute*) attributeInfo.info;
+                method->codeAttribute = (Code_attribute *) attributeInfo.info;
             }
         }
 
@@ -69,6 +73,6 @@ MethodTable::MethodTable(ClassFile *classFile) {
         method->classFile = classFile;
 
         std::string signature = method->name + method->descriptor;
-        map.insert(std::pair<std::string, Method*>(signature, method));
+        map.insert(std::pair<std::string, Method *>(signature, method));
     }
 }

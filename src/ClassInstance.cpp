@@ -5,14 +5,14 @@
 #include "ClassInstance.h"
 #include <cstdlib>
 
-void ClassInstance::initializeObject(ClassFile* _classFile, ClassInstance *_parentInstance) {
+void ClassInstance::initializeObject(ClassFile *_classFile, ClassInstance *_parentInstance) {
     this->classFile = _classFile;
     this->parentInstance = _parentInstance;
 
     if (instanceData != nullptr) {
         free(instanceData);
     }
-    instanceData = (int*) calloc(classFile->fields_count, sizeof(int));
+    instanceData = (int *) calloc(classFile->fields_count, sizeof(int));
     instanceDataSize = classFile->fields_count;
 }
 
@@ -23,7 +23,7 @@ void ClassInstance::initializeArray(ClassFile *_classFile, int size) {
     if (instanceData != nullptr) {
         free(instanceData);
     }
-    instanceData = (int*) calloc(size, sizeof(int));
+    instanceData = (int *) calloc(size, sizeof(int));
 
     //Length field
     instanceDataSize = size + 1;

@@ -4,15 +4,15 @@
 
 #include "ClassInstantiator.h"
 
-ClassInstantiator::ClassInstantiator(ClassFileLookup *classFileLookup, ObjectPool* objectPool) {
+ClassInstantiator::ClassInstantiator(ClassFileLookup *classFileLookup, ObjectPool *objectPool) {
     this->classFileLookup = classFileLookup;
     this->objectPool = objectPool;
 }
 
-ClassInstance *ClassInstantiator::newInstance(const std::string& className, ObjectRef objectRef) {
-    ClassInstance* classInstance = objectPool->getObject(objectRef);
+ClassInstance *ClassInstantiator::newInstance(const std::string &className, ObjectRef objectRef) {
+    ClassInstance *classInstance = objectPool->getObject(objectRef);
 
-    ClassFile* classFile = classFileLookup->getClassFile(className);
+    ClassFile *classFile = classFileLookup->getClassFile(className);
     ClassInstance *parentInstance = nullptr;
 
     if (classFile->super_class != 0) {

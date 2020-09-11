@@ -12,7 +12,9 @@
 #define SHORT_MASK 0xFFFF
 #define NULL_REF 0
 
-MethodRunner::MethodRunner(Code_attribute* code, ClassFile* classFile, std::stack<int>* operandStack, int numArgs, const int* args, StringPool *stringPool, ObjectPool *objectPool, ClassInstantiator *classInstantiator, ClassFileLookup *classFileLookup) {
+MethodRunner::MethodRunner(Code_attribute *code, ClassFile *classFile, std::stack<int> *operandStack, int numArgs,
+                           const int *args, StringPool *stringPool, ObjectPool *objectPool,
+                           ClassInstantiator *classInstantiator, ClassFileLookup *classFileLookup) {
     this->operandStack = operandStack;
     this->code = code;
     this->classInstantiator = classInstantiator;
@@ -25,7 +27,7 @@ MethodRunner::MethodRunner(Code_attribute* code, ClassFile* classFile, std::stac
     for (int i = 0; i < numArgs; ++i) {
         locals[i] = args[i];
     }
-    instructions = (uint8_t*)code->code;
+    instructions = (uint8_t *) code->code;
 }
 
 void MethodRunner::run() {
@@ -116,7 +118,7 @@ void MethodRunner::runInstruction() {
             operandStack->pop();
             int value1 = operandStack->top();
             operandStack->pop();
-            int res = value1 ^ value2; // NOLINT(hicpp-signed-bitwise)
+            int res = value1 ^value2; // NOLINT(hicpp-signed-bitwise)
             operandStack->push(res);
             break;
         }
@@ -159,7 +161,7 @@ void MethodRunner::runInstruction() {
             operandStack->pop();
             int value1 = operandStack->top();
             operandStack->pop();
-            int res = (int)((unsigned int)value1 >> (shamt & SHAMT_MASK)); // NOLINT(hicpp-signed-bitwise)
+            int res = (int) ((unsigned int) value1 >> (shamt & SHAMT_MASK)); // NOLINT(hicpp-signed-bitwise)
             operandStack->push(res);
             break;
         }
@@ -403,7 +405,8 @@ void MethodRunner::runInstruction() {
             uint8_t branchByte2 = next();
             uint8_t branchByte3 = next();
             uint8_t branchByte4 = next();
-            int jumpOffset = (branchByte1 << 24) | (branchByte2 << 16) | (branchByte3 << 8) | branchByte4; // NOLINT(hicpp-signed-bitwise)
+            int jumpOffset = (branchByte1 << 24) | (branchByte2 << 16) | (branchByte3 << 8) |
+                             branchByte4; // NOLINT(hicpp-signed-bitwise)
             int jumpAddr = pc + jumpOffset;
             jump(jumpAddr);
             break;
@@ -538,7 +541,8 @@ void MethodRunner::runInstruction() {
             uint8_t branchByte2 = next();
             uint8_t branchByte3 = next();
             uint8_t branchByte4 = next();
-            int jumpOffset = (branchByte1 << 24) | (branchByte2 << 16) | (branchByte3 << 8) | branchByte4; // NOLINT(hicpp-signed-bitwise)
+            int jumpOffset = (branchByte1 << 24) | (branchByte2 << 16) | (branchByte3 << 8) |
+                             branchByte4; // NOLINT(hicpp-signed-bitwise)
             int jumpAddr = pc + jumpOffset;
             jump(jumpAddr);
             break;
@@ -618,7 +622,7 @@ void MethodRunner::runInstruction() {
                     auto *stringInfo = (CONSTANT_String_info *) cpEntry.info;
                     cp_info utf8Entry = classFile->constant_pool[stringInfo->string_index - 1];
                     auto *utf8Info = (CONSTANT_Utf8_info *) utf8Entry.info;
-                    const char* stringValue = (char*) utf8Info->bytes;
+                    const char *stringValue = (char *) utf8Info->bytes;
                     int stringRef = stringPool->getStringInstanceRef(stringValue);
                     value = stringRef;
                     break;
@@ -649,7 +653,7 @@ void MethodRunner::runInstruction() {
             auto *classInfo = (CONSTANT_Class_info *) cpEntry.info;
             cp_info classNameEntry = classFile->constant_pool[classInfo->name_index - 1];
             auto *classNameInfo = (CONSTANT_Utf8_info *) classNameEntry.info;
-            const char* className = (char*) classNameInfo->bytes;
+            const char *className = (char *) classNameInfo->bytes;
 
             ObjectRef objectRef = objectPool->newObjectRef();
             classInstantiator->newInstance(std::string(className), objectRef);
@@ -671,27 +675,27 @@ void MethodRunner::runInstruction() {
             auto *classInfo = (CONSTANT_Class_info *) classEntry.info;
             cp_info classNameEntry = classFile->constant_pool[classInfo->name_index - 1];
             auto *classNameInfo = (CONSTANT_Utf8_info *) classNameEntry.info;
-            const char* className = (char*) classNameInfo->bytes;
+            const char *className = (char *) classNameInfo->bytes;
 
             cp_info nameAndTypeEntry = classFile->constant_pool[methodRef->name_and_type_index - 1];
             auto *nameAndTypeInfo = (CONSTANT_NameAndType_info *) nameAndTypeEntry.info;
 
             cp_info methodNameEntry = classFile->constant_pool[nameAndTypeInfo->name_index - 1];
             auto *methodNameInfo = (CONSTANT_Utf8_info *) methodNameEntry.info;
-            const char* methodName = (char*) methodNameInfo->bytes;
+            const char *methodName = (char *) methodNameInfo->bytes;
 
             cp_info methodDescriptorEntry = classFile->constant_pool[nameAndTypeInfo->descriptor_index - 1];
             auto *descriptorInfo = (CONSTANT_Utf8_info *) methodDescriptorEntry.info;
-            const char* descriptor = (char*) descriptorInfo->bytes;
+            const char *descriptor = (char *) descriptorInfo->bytes;
 
             std::string signature = std::string(methodName) + std::string(descriptor);
 
             ClassFile *methodClassFile = classFileLookup->getClassFile(std::string(className));
-            Method* method = lookupMethod(signature, methodClassFile);
+            Method *method = lookupMethod(signature, methodClassFile);
 
             //This-argument and the other arguments
             int numArgs = method->numArguments + 1;
-            int* args = new int[numArgs];
+            int *args = new int[numArgs];
             for (int i = numArgs - 1; i >= 0; --i) {
                 int value = operandStack->top();
                 operandStack->pop();
@@ -705,7 +709,8 @@ void MethodRunner::runInstruction() {
                 }
             }
 
-            MethodRunner methodRunner(method->codeAttribute, method->classFile, operandStack, numArgs, args, stringPool, objectPool, classInstantiator, classFileLookup);
+            MethodRunner methodRunner(method->codeAttribute, method->classFile, operandStack, numArgs, args, stringPool,
+                                      objectPool, classInstantiator, classFileLookup);
             methodRunner.run();
 
             delete[] args;
@@ -733,24 +738,24 @@ void MethodRunner::runInstruction() {
             auto *classInfo = (CONSTANT_Class_info *) classEntry.info;
             cp_info classNameEntry = classFile->constant_pool[classInfo->name_index - 1];
             auto *classNameInfo = (CONSTANT_Utf8_info *) classNameEntry.info;
-            const char* className = (char*) classNameInfo->bytes;
+            const char *className = (char *) classNameInfo->bytes;
 
             cp_info nameAndTypeEntry = classFile->constant_pool[fieldRef->name_and_type_index - 1];
             auto *nameAndTypeInfo = (CONSTANT_NameAndType_info *) nameAndTypeEntry.info;
 
             cp_info fieldNameEntry = classFile->constant_pool[nameAndTypeInfo->name_index - 1];
             auto *fieldNameInfo = (CONSTANT_Utf8_info *) fieldNameEntry.info;
-            const char* fieldName = (char*) fieldNameInfo->bytes;
+            const char *fieldName = (char *) fieldNameInfo->bytes;
 
             cp_info fieldDescriptorEntry = classFile->constant_pool[nameAndTypeInfo->descriptor_index - 1];
             auto *descriptorInfo = (CONSTANT_Utf8_info *) fieldDescriptorEntry.info;
-            const char* descriptor = (char*) descriptorInfo->bytes;
+            const char *descriptor = (char *) descriptorInfo->bytes;
 
-            ClassInstance* classInstance = objectPool->getObject(objectRef);
-            ClassInstance* resultClassInstance = nullptr;
+            ClassInstance *classInstance = objectPool->getObject(objectRef);
+            ClassInstance *resultClassInstance = nullptr;
 
             ClassFile *fieldClassFile = classFileLookup->getClassFile(std::string(className));
-            Field* field = lookupField(fieldName, classInstance, &resultClassInstance);
+            Field *field = lookupField(fieldName, classInstance, &resultClassInstance);
 
             resultClassInstance->putField(field->index, value);
 
@@ -771,21 +776,21 @@ void MethodRunner::runInstruction() {
             auto *classInfo = (CONSTANT_Class_info *) classEntry.info;
             cp_info classNameEntry = classFile->constant_pool[classInfo->name_index - 1];
             auto *classNameInfo = (CONSTANT_Utf8_info *) classNameEntry.info;
-            const char* className = (char*) classNameInfo->bytes;
+            const char *className = (char *) classNameInfo->bytes;
 
             cp_info nameAndTypeEntry = classFile->constant_pool[fieldRef->name_and_type_index - 1];
             auto *nameAndTypeInfo = (CONSTANT_NameAndType_info *) nameAndTypeEntry.info;
 
             cp_info fieldNameEntry = classFile->constant_pool[nameAndTypeInfo->name_index - 1];
             auto *fieldNameInfo = (CONSTANT_Utf8_info *) fieldNameEntry.info;
-            const char* fieldName = (char*) fieldNameInfo->bytes;
+            const char *fieldName = (char *) fieldNameInfo->bytes;
 
             cp_info fieldDescriptorEntry = classFile->constant_pool[nameAndTypeInfo->descriptor_index - 1];
             auto *descriptorInfo = (CONSTANT_Utf8_info *) fieldDescriptorEntry.info;
-            const char* descriptor = (char*) descriptorInfo->bytes;
+            const char *descriptor = (char *) descriptorInfo->bytes;
 
             ClassFile *fieldClassFile = classFileLookup->getClassFile(std::string(className));
-            Field* field = lookupStaticField(fieldName, fieldClassFile);
+            Field *field = lookupStaticField(fieldName, fieldClassFile);
 
             field->staticValue = value;
 
@@ -803,21 +808,21 @@ void MethodRunner::runInstruction() {
             auto *classInfo = (CONSTANT_Class_info *) classEntry.info;
             cp_info classNameEntry = classFile->constant_pool[classInfo->name_index - 1];
             auto *classNameInfo = (CONSTANT_Utf8_info *) classNameEntry.info;
-            const char* className = (char*) classNameInfo->bytes;
+            const char *className = (char *) classNameInfo->bytes;
 
             cp_info nameAndTypeEntry = classFile->constant_pool[fieldRef->name_and_type_index - 1];
             auto *nameAndTypeInfo = (CONSTANT_NameAndType_info *) nameAndTypeEntry.info;
 
             cp_info fieldNameEntry = classFile->constant_pool[nameAndTypeInfo->name_index - 1];
             auto *fieldNameInfo = (CONSTANT_Utf8_info *) fieldNameEntry.info;
-            const char* fieldName = (char*) fieldNameInfo->bytes;
+            const char *fieldName = (char *) fieldNameInfo->bytes;
 
             cp_info fieldDescriptorEntry = classFile->constant_pool[nameAndTypeInfo->descriptor_index - 1];
             auto *descriptorInfo = (CONSTANT_Utf8_info *) fieldDescriptorEntry.info;
-            const char* descriptor = (char*) descriptorInfo->bytes;
+            const char *descriptor = (char *) descriptorInfo->bytes;
 
             ClassFile *fieldClassFile = classFileLookup->getClassFile(std::string(className));
-            Field* field = lookupStaticField(fieldName, fieldClassFile);
+            Field *field = lookupStaticField(fieldName, fieldClassFile);
 
             operandStack->push(field->staticValue);
 
@@ -842,25 +847,25 @@ void MethodRunner::runInstruction() {
             auto *classInfo = (CONSTANT_Class_info *) classEntry.info;
             cp_info classNameEntry = classFile->constant_pool[classInfo->name_index - 1];
             auto *classNameInfo = (CONSTANT_Utf8_info *) classNameEntry.info;
-            const char* className = (char*) classNameInfo->bytes;
+            const char *className = (char *) classNameInfo->bytes;
 
             cp_info nameAndTypeEntry = classFile->constant_pool[fieldRef->name_and_type_index - 1];
             auto *nameAndTypeInfo = (CONSTANT_NameAndType_info *) nameAndTypeEntry.info;
 
             cp_info fieldNameEntry = classFile->constant_pool[nameAndTypeInfo->name_index - 1];
             auto *fieldNameInfo = (CONSTANT_Utf8_info *) fieldNameEntry.info;
-            const char* fieldName = (char*) fieldNameInfo->bytes;
+            const char *fieldName = (char *) fieldNameInfo->bytes;
 
             cp_info fieldDescriptorEntry = classFile->constant_pool[nameAndTypeInfo->descriptor_index - 1];
             auto *descriptorInfo = (CONSTANT_Utf8_info *) fieldDescriptorEntry.info;
-            const char* descriptor = (char*) descriptorInfo->bytes;
+            const char *descriptor = (char *) descriptorInfo->bytes;
 
 
-            ClassInstance* classInstance = objectPool->getObject(objectRef);
-            ClassInstance* resultClassInstance = nullptr;
+            ClassInstance *classInstance = objectPool->getObject(objectRef);
+            ClassInstance *resultClassInstance = nullptr;
 
             ClassFile *fieldClassFile = classFileLookup->getClassFile(std::string(className));
-            Field* field = lookupField(fieldName, classInstance, &resultClassInstance);
+            Field *field = lookupField(fieldName, classInstance, &resultClassInstance);
             int value = resultClassInstance->getField(field->index);
 
             operandStack->push(value);
@@ -874,9 +879,9 @@ void MethodRunner::runInstruction() {
             uint8_t arrayType = next();
 
             ObjectRef objectRef = objectPool->newObjectRef();
-            ClassInstance* classInstance = objectPool->getObject(objectRef);
+            ClassInstance *classInstance = objectPool->getObject(objectRef);
 
-            ClassFile* arrayClassFile = classFileLookup->getClassFile(std::string(BUILTIN_ARRAY_CLASS_NAME));
+            ClassFile *arrayClassFile = classFileLookup->getClassFile(std::string(BUILTIN_ARRAY_CLASS_NAME));
             classInstance->initializeArray(arrayClassFile, count);
 
             operandStack->push(objectRef);
@@ -890,7 +895,7 @@ void MethodRunner::runInstruction() {
                 throw NullPointerException();
             }
 
-            ClassInstance* classInstance = objectPool->getObject(arrayRef);
+            ClassInstance *classInstance = objectPool->getObject(arrayRef);
 
             //Length is in field 0
             int length = classInstance->getField(0);
@@ -911,7 +916,7 @@ void MethodRunner::runInstruction() {
                 throw NullPointerException();
             }
 
-            ClassInstance* classInstance = objectPool->getObject(arrayRef);
+            ClassInstance *classInstance = objectPool->getObject(arrayRef);
 
             int value = classInstance->getArrayElement(index);
             operandStack->push(value);
@@ -933,7 +938,7 @@ void MethodRunner::runInstruction() {
                 throw NullPointerException();
             }
 
-            ClassInstance* classInstance = objectPool->getObject(arrayRef);
+            ClassInstance *classInstance = objectPool->getObject(arrayRef);
 
             classInstance->putArrayElement(index, value);
             break;
@@ -942,17 +947,18 @@ void MethodRunner::runInstruction() {
             int stringObjectRef = operandStack->top();
             operandStack->pop();
 
-            ClassInstance* classInstance = objectPool->getObject(stringObjectRef);
-            ClassInstance* resultClassInstance = nullptr;
+            ClassInstance *classInstance = objectPool->getObject(stringObjectRef);
+            ClassInstance *resultClassInstance = nullptr;
 
-            Field* field = lookupField(BUILTIN_STRING_CLASS_VALUE_FIELD, classInstance, &resultClassInstance);
+            Field *field = lookupField(BUILTIN_STRING_CLASS_VALUE_FIELD, classInstance, &resultClassInstance);
             ObjectRef valueArrayRef = resultClassInstance->getField(field->index);
 
-            ClassInstance* charArrayObject = objectPool->getObject(valueArrayRef);
+            ClassInstance *charArrayObject = objectPool->getObject(valueArrayRef);
             int length = charArrayObject->getField(0);
 
             for (int i = 0; i < length; ++i) {
-                char c = charArrayObject->getArrayElement(i) & CHAR_MASK; // NOLINT(hicpp-signed-bitwise,cppcoreguidelines-narrowing-conversions)
+                char c = charArrayObject->getArrayElement(i) &
+                         CHAR_MASK; // NOLINT(hicpp-signed-bitwise,cppcoreguidelines-narrowing-conversions)
                 std::cout << c;
             }
             std::cout << std::endl;

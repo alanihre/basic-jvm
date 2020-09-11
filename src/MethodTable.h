@@ -26,11 +26,12 @@ struct Method {
 
 class MethodTable {
 private:
-    std::unordered_map<std::string, Method*> map;
+    std::unordered_map<std::string, Method *> map;
 
 public:
-    explicit MethodTable(ClassFile* classFile);
-    Method *getMethod(const std::string& signature);
+    explicit MethodTable(ClassFile *classFile);
+
+    Method *getMethod(const std::string &signature);
 };
 
 

@@ -17,7 +17,7 @@ ObjectPool::~ObjectPool() {
 void ObjectPool::increaseSizeIfRequired() {
     if (size == capacity) {
         capacity += POOL_SIZE_CHUNK;
-        objects = (ClassInstance*) realloc(objects, capacity);
+        objects = (ClassInstance *) realloc(objects, capacity);
     }
 }
 
@@ -26,7 +26,7 @@ ObjectRef ObjectPool::newObjectRef() {
     return size++ + REF_OFFSET;
 }
 
-ClassInstance* ObjectPool::getObject(ObjectRef ref) {
+ClassInstance *ObjectPool::getObject(ObjectRef ref) {
     ref -= REF_OFFSET;
     if (ref >= size) {
         throw InvalidObjectReferenceException();

@@ -11,19 +11,21 @@
 
 class ClassFileLookup {
 private:
-    std::unordered_map<std::string, ClassFile*> map;
-    ClassFile* loadClassFile(const std::string& className);
+    std::unordered_map<std::string, ClassFile *> map;
+
+    ClassFile *loadClassFile(const std::string &className);
 
 public:
     ClassFileLookup();
-    void insertClassFile(const std::string& className, ClassFile* classFile);
-    ClassFile* getClassFile(const std::string& className);
+
+    void insertClassFile(const std::string &className, ClassFile *classFile);
+
+    ClassFile *getClassFile(const std::string &className);
 };
 
-class ClassFileNotFoundException: public std::exception
-{
+class ClassFileNotFoundException : public std::exception {
 public:
-    virtual const char* what() const throw() {
+    virtual const char *what() const throw() {
         return "Class file not found";
     }
 };

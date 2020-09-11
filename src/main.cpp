@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
 
     ClassFileLookup classFileLookup;
 
-    auto* operandStack = new std::stack<int>;
+    auto *operandStack = new std::stack<int>;
 
     ObjectPool objectPool = ObjectPool();
 
@@ -26,14 +26,14 @@ int main(int argc, char *argv[]) {
     loadBuiltinClasses(&classFileLookup, &objectPool, &classInstantiator);
 
 
-    ClassFile* mainClass = classFileLookup.getClassFile(mainClassName);
+    ClassFile *mainClass = classFileLookup.getClassFile(mainClassName);
 
     //Load command line arguments
     int numArgs = argc - 2;
-    int* args = new int[1];
+    int *args = new int[1];
     ObjectRef argsArrayRef = objectPool.newObjectRef();
-    ClassInstance* classInstance = objectPool.getObject(argsArrayRef);
-    ClassFile* arrayClassFile = classFileLookup.getClassFile(std::string(BUILTIN_ARRAY_CLASS_NAME));
+    ClassInstance *classInstance = objectPool.getObject(argsArrayRef);
+    ClassFile *arrayClassFile = classFileLookup.getClassFile(std::string(BUILTIN_ARRAY_CLASS_NAME));
     classInstance->initializeArray(arrayClassFile, numArgs);
     for (int i = 0; i < numArgs; ++i) {
         ObjectRef stringRef = stringPool.getStringInstanceRef(std::string(argv[i + 2]));
@@ -41,8 +41,9 @@ int main(int argc, char *argv[]) {
     }
     args[0] = argsArrayRef;
 
-    Method* method = lookupMethod("main([Ljava/lang/String;)V", mainClass);
-    MethodRunner methodRunner(method->codeAttribute, mainClass, operandStack, numArgs, args, &stringPool, &objectPool, &classInstantiator, &classFileLookup);
+    Method *method = lookupMethod("main([Ljava/lang/String;)V", mainClass);
+    MethodRunner methodRunner(method->codeAttribute, mainClass, operandStack, numArgs, args, &stringPool, &objectPool,
+                              &classInstantiator, &classFileLookup);
     methodRunner.run();
 
     delete[] args;

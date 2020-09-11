@@ -25,11 +25,12 @@ struct Field {
 
 class FieldTable {
 private:
-    std::unordered_map<std::string, Field*> map;
+    std::unordered_map<std::string, Field *> map;
 
 public:
-    explicit FieldTable(ClassFile* classFile);
-    Field *getField(const std::string& signature);
+    explicit FieldTable(ClassFile *classFile);
+
+    Field *getField(const std::string &signature);
 };
 
 

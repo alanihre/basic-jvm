@@ -16,7 +16,8 @@
 #include "ClassInstance.h"
 #include "FieldLookup.h"
 
-inline void loadBuiltinClasses(ClassFileLookup* classFileLookup, ObjectPool* objectPool, ClassInstantiator* classInstantiator) {
+inline void
+loadBuiltinClasses(ClassFileLookup *classFileLookup, ObjectPool *objectPool, ClassInstantiator *classInstantiator) {
     auto *objectClassFile = new ObjectClassFile();
     classFileLookup->insertClassFile(BUILTIN_OBJECT_CLASS_NAME, objectClassFile);
 
@@ -36,9 +37,10 @@ inline void loadBuiltinClasses(ClassFileLookup* classFileLookup, ObjectPool* obj
     classFileLookup->insertClassFile(BUILTIN_PRINT_STREAM_CLASS_NAME, printStreamClassFile);
 
     ObjectRef stdoutPrintStreamRef = objectPool->newObjectRef();
-    ClassInstance* stdoutPrintStream = classInstantiator->newInstance(BUILTIN_PRINT_STREAM_CLASS_NAME, stdoutPrintStreamRef);
+    ClassInstance *stdoutPrintStream = classInstantiator->newInstance(BUILTIN_PRINT_STREAM_CLASS_NAME,
+                                                                      stdoutPrintStreamRef);
 
-    Field* field = lookupStaticField(BUILTIN_SYSTEM_CLASS_OUT_FIELD, systemClassFile);
+    Field *field = lookupStaticField(BUILTIN_SYSTEM_CLASS_OUT_FIELD, systemClassFile);
     field->staticValue = stdoutPrintStreamRef;
 }
 

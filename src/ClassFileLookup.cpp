@@ -8,8 +8,8 @@
 
 ClassFileLookup::ClassFileLookup() = default;
 
-void ClassFileLookup::insertClassFile(const std::string& className , ClassFile *classFile) {
-    map.insert(std::pair<std::string, ClassFile*>(className, classFile));
+void ClassFileLookup::insertClassFile(const std::string &className, ClassFile *classFile) {
+    map.insert(std::pair<std::string, ClassFile *>(className, classFile));
 }
 
 inline bool fileExists(const char *fileName) {
@@ -17,7 +17,7 @@ inline bool fileExists(const char *fileName) {
     return stat(fileName, &buffer) == 0;
 }
 
-ClassFile *ClassFileLookup::getClassFile(const std::string& className) {
+ClassFile *ClassFileLookup::getClassFile(const std::string &className) {
     if (map.find(className) == map.end()) {
         ClassFile *classFile = loadClassFile(className);
         insertClassFile(className, classFile);
@@ -26,9 +26,9 @@ ClassFile *ClassFileLookup::getClassFile(const std::string& className) {
     return map[className];
 }
 
-ClassFile* ClassFileLookup::loadClassFile(const std::string& className) {
+ClassFile *ClassFileLookup::loadClassFile(const std::string &className) {
     std::string fileNameString = className + ".class";
-    const char* fileName = fileNameString.c_str();
+    const char *fileName = fileNameString.c_str();
     if (!fileExists(fileName)) {
         throw ClassFileNotFoundException();
     }

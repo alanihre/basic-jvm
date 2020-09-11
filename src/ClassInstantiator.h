@@ -12,11 +12,12 @@
 class ClassInstantiator {
 private:
     ClassFileLookup *classFileLookup;
-    ObjectPool* objectPool;
+    ObjectPool *objectPool;
 
 public:
-    explicit ClassInstantiator(ClassFileLookup *classFileLookup, ObjectPool* objectPool);
-    ClassInstance* newInstance(const std::string& className, ObjectRef objectRef);
+    explicit ClassInstantiator(ClassFileLookup *classFileLookup, ObjectPool *objectPool);
+
+    ClassInstance *newInstance(const std::string &className, ObjectRef objectRef);
 };
 
 
