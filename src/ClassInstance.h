@@ -27,7 +27,7 @@ public:
 
     int getArrayElement(int index);
 
-    int putArrayElement(int index, int value);
+    void putArrayElement(int index, int value);
 };
 
 class FieldIndexOutOfBoundsException : public std::exception {

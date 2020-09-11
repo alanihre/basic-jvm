@@ -52,7 +52,7 @@ int ClassInstance::getArrayElement(int index) {
     return instanceData[index + 1];
 }
 
-int ClassInstance::putArrayElement(int index, int value) {
+void ClassInstance::putArrayElement(int index, int value) {
     if (index > instanceData[0] - 1) {
         throw ArrayIndexOutOfBoundsException();
     }
