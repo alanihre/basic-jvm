@@ -1,71 +1,71 @@
-aconst_null DONE
-aload DONE
-aload_<n> DONE
-areturn DONE
-astore DONE
-astore_<n> DONE
-bipush DONE
-dup DONE
-dup_x1 DONE
-dup_x2 DONE
-dup2 DONE
-dup2_x1 DONE
-dup2_x2 DONE
-goto DONE
-goto_w DONE
-i2b DONE
-i2c DONE
-i2s DONE
-iadd DONE
-iand DONE
-iconst_<i> DONE
-idiv DONE
-if_acmp<cond> DONE
-if_icmp<cond> DONE
-if<cond> DONE
-ifnonnull DONE
-ifnull DONE
-iinc DONE
-iload DONE
-iload_<n> DONE
-imul DONE
-ineg DONE
-ior DONE
-irem DONE
-ireturn DONE
-ishl DONE
-ishr DONE
-istore DONE
-istore_<n> DONE
-isub DONE
-iushr DONE
-ixor DONE
-jsr DONE
-jsr_w DONE
-nop DONE
-pop DONE
-pop2 DONE
-ret DONE
-return DONE
-sipush DONE
-swap DONE
-putfield DONE
-putstatic DONE
-getfield DONE
-getstatic DONE
-invokespecial DONE
-invokestatic DONE
-invokevirtual DONE
-new DONE
-ldc PARTLY DONE
-ldc_w DONE
-newarray DONE
-arraylength DONE
-iaload DONE
-iastore DONE
-baload DONE
-bastore DONE
-caload DONE
-castore DONE
-saload DONE
-sastore DONE
+aconst_null
+aload
+aload_<n>
+areturn
+astore
+astore_<n>
+bipush
+dup
+dup_x1
+dup_x2
+dup2
+dup2_x1
+dup2_x2
+goto
+goto_w
+i2b
+i2c
+i2s
+iadd
+iand
+iconst_<i>
+idiv
+if_acmp<cond>
+if_icmp<cond>
+if<cond>
+ifnonnull
+ifnull
+iinc
+iload
+iload_<n>
+imul
+ineg
+ior
+irem
+ireturn
+ishl
+ishr
+istore
+istore_<n>
+isub
+iushr
+ixor
+jsr
+jsr_w
+nop
+pop
+pop2
+ret
+return
+sipush
+swap
+putfield
+putstatic
+getfield
+getstatic
+invokespecial
+invokestatic
+invokevirtual
+new
+ldc PARTLY
+ldc_w
+newarray
+arraylength
+iaload
+iastore
+baload
+bastore
+caload
+castore
+saload
+sastore
