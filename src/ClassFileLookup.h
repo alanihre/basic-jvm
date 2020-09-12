@@ -2,8 +2,8 @@
 // Created by Alan Ihre on 2020-09-08.
 //
 
-#ifndef LAB7_CLASSFILELOOKUP_H
-#define LAB7_CLASSFILELOOKUP_H
+#ifndef BASIC_JVM_CLASSFILELOOKUP_H
+#define BASIC_JVM_CLASSFILELOOKUP_H
 
 #include <unordered_map>
 #include "ClassFile.h"
@@ -32,4 +32,4 @@ public:
     }
 };
 
-#endif //LAB7_CLASSFILELOOKUP_H
+#endif //BASIC_JVM_CLASSFILELOOKUP_H

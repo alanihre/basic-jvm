@@ -2,8 +2,8 @@
 // Created by Alan Ihre on 2020-09-10.
 //
 
-#ifndef LAB7_CLASSINSTANTIATOR_H
-#define LAB7_CLASSINSTANTIATOR_H
+#ifndef BASIC_JVM_CLASSINSTANTIATOR_H
+#define BASIC_JVM_CLASSINSTANTIATOR_H
 
 #include "ClassFileLookup.h"
 #include "ClassInstance.h"
@@ -21,4 +21,4 @@ public:
 };
 
 
-#endif //LAB7_CLASSINSTANTIATOR_H
+#endif //BASIC_JVM_CLASSINSTANTIATOR_H

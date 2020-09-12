@@ -2,8 +2,8 @@
 // Created by Alan Ihre on 2020-09-11.
 //
 
-#ifndef LAB7_BUILTINCLASSLOADER_H
-#define LAB7_BUILTINCLASSLOADER_H
+#ifndef BASIC_JVM_BUILTINCLASSLOADER_H
+#define BASIC_JVM_BUILTINCLASSLOADER_H
 
 #include "builtin/StringClassFile.h"
 #include "builtin/ObjectClassFile.h"
@@ -50,4 +50,4 @@ loadBuiltinClasses(ClassFileLookup *classFileLookup, ObjectPool *objectPool, Cla
     field->staticValue = stdoutPrintStreamRef;
 }
 
-#endif //LAB7_BUILTINCLASSLOADER_H
+#endif //BASIC_JVM_BUILTINCLASSLOADER_H

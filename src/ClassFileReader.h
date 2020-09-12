@@ -2,8 +2,8 @@
 // Created by Alan Ihre on 2020-09-07.
 //
 
-#ifndef LAB7_CLASSFILEREADER_H
-#define LAB7_CLASSFILEREADER_H
+#ifndef BASIC_JVM_CLASSFILEREADER_H
+#define BASIC_JVM_CLASSFILEREADER_H
 
 #include <iostream>
 #include <fstream>
@@ -271,4 +271,4 @@ inline void readClassFile(const char *file, ClassFileLookup *classFileLookup,  C
     }
 }
 
-#endif //LAB7_CLASSFILEREADER_H
+#endif //BASIC_JVM_CLASSFILEREADER_H

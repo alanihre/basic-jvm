@@ -2,8 +2,8 @@
 // Created by Alan Ihre on 2020-09-08.
 //
 
-#ifndef LAB7_OBJECTCLASSFILE_H
-#define LAB7_OBJECTCLASSFILE_H
+#ifndef BASIC_JVM_OBJECTCLASSFILE_H
+#define BASIC_JVM_OBJECTCLASSFILE_H
 
 #include "../Instructions.h"
 
@@ -109,4 +109,4 @@ struct ObjectClassFile : public ClassFile {
     }
 };
 
-#endif //LAB7_CLASSINSTANCE_H
+#endif //BASIC_JVM_CLASSINSTANCE_H

@@ -2,8 +2,8 @@
 // Created by Alan Ihre on 2020-09-07.
 //
 
-#ifndef LAB7_CLASSINSTANCE_H
-#define LAB7_CLASSINSTANCE_H
+#ifndef BASIC_JVM_CLASSINSTANCE_H
+#define BASIC_JVM_CLASSINSTANCE_H
 
 #include "ClassFile.h"
 #include <string>
@@ -49,4 +49,4 @@ public:
 };
 
 
-#endif //LAB7_CLASSINSTANCE_H
+#endif //BASIC_JVM_CLASSINSTANCE_H

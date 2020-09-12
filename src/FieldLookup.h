@@ -2,8 +2,8 @@
 // Created by Alan Ihre on 2020-09-10.
 //
 
-#ifndef LAB7_FIELDLOOKUP_H
-#define LAB7_FIELDLOOKUP_H
+#ifndef BASIC_JVM_FIELDLOOKUP_H
+#define BASIC_JVM_FIELDLOOKUP_H
 
 #include "FieldTable.h"
 #include "ClassInstance.h"
@@ -46,4 +46,4 @@ inline Field *lookupStaticField(const std::string &name, ClassFile *classFile) {
     throw FieldNotFoundException();
 }
 
-#endif //LAB7_FIELDLOOKUP_H
+#endif //BASIC_JVM_FIELDLOOKUP_H

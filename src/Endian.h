@@ -2,8 +2,8 @@
 // Created by Alan Ihre on 2020-09-11.
 //
 
-#ifndef LAB7_ENDIAN_H
-#define LAB7_ENDIAN_H
+#ifndef BASIC_JVM_ENDIAN_H
+#define BASIC_JVM_ENDIAN_H
 
 enum ENDIANNESS {
     LITTLEENDIAN, BIGENDIAN
@@ -28,4 +28,4 @@ inline void SwapEndian(u4 &val) {
 }
 
 
-#endif //LAB7_ENDIAN_H
+#endif //BASIC_JVM_ENDIAN_H

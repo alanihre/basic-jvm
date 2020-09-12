@@ -2,8 +2,8 @@
 // Created by Alan Ihre on 2020-09-08.
 //
 
-#ifndef LAB7_STRINGPOOL_H
-#define LAB7_STRINGPOOL_H
+#ifndef BASIC_JVM_STRINGPOOL_H
+#define BASIC_JVM_STRINGPOOL_H
 
 #include <unordered_map>
 #include "builtin/StringClassFile.h"
@@ -26,4 +26,4 @@ public:
 };
 
 
-#endif //LAB7_STRINGPOOL_H
+#endif //BASIC_JVM_STRINGPOOL_H

@@ -2,8 +2,8 @@
 // Created by Alan Ihre on 2020-09-11.
 //
 
-#ifndef LAB7_PRINTSTREAMCLASSFILE_H
-#define LAB7_PRINTSTREAMCLASSFILE_H
+#ifndef BASIC_JVM_PRINTSTREAMCLASSFILE_H
+#define BASIC_JVM_PRINTSTREAMCLASSFILE_H
 
 #include "../ClassFile.h"
 #include "ObjectClassFile.h"
@@ -202,4 +202,4 @@ struct PrintStreamClassFile : public ClassFile {
     }
 };
 
-#endif //LAB7_PRINTSTREAMCLASSFILE_H
+#endif //BASIC_JVM_PRINTSTREAMCLASSFILE_H

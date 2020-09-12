@@ -2,8 +2,8 @@
 // Created by Alan Ihre on 2020-09-11.
 //
 
-#ifndef LAB7_STRINGBUILDERCLASSFILE_H
-#define LAB7_STRINGBUILDERCLASSFILE_H
+#ifndef BASIC_JVM_STRINGBUILDERCLASSFILE_H
+#define BASIC_JVM_STRINGBUILDERCLASSFILE_H
 
 #include "../ClassFile.h"
 #include "ObjectClassFile.h"
@@ -293,4 +293,4 @@ struct StringBuilderClassFile : public ClassFile {
     }
 };
 
-#endif //LAB7_STRINGBUILDERCLASSFILE_H
+#endif //BASIC_JVM_STRINGBUILDERCLASSFILE_H

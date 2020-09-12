@@ -3,8 +3,8 @@
 //
 
 
-#ifndef LAB7_CLASSFILE_H
-#define LAB7_CLASSFILE_H
+#ifndef BASIC_JVM_CLASSFILE_H
+#define BASIC_JVM_CLASSFILE_H
 
 #include "MethodTable.h"
 #include "FieldTable.h"
@@ -289,4 +289,4 @@ struct ClassFile {
 };
 
 
-#endif //LAB7_CLASSFILE_H
+#endif //BASIC_JVM_CLASSFILE_H

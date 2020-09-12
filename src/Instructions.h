@@ -2,8 +2,8 @@
 // Created by Alan Ihre on 2020-08-30.
 //
 
-#ifndef LAB7_INSTRUCTIONS_H
-#define LAB7_INSTRUCTIONS_H
+#ifndef BASIC_JVM_INSTRUCTIONS_H
+#define BASIC_JVM_INSTRUCTIONS_H
 
 #define ARRAY_TYPE_BOOLEAN 4
 #define ARRAY_TYPE_CHAR 5
@@ -116,4 +116,4 @@
 #define SA_STORE 0x56
 #define INTERNAL_PRINTLN 0xfd
 
-#endif //LAB7_INSTRUCTIONS_H
+#endif //BASIC_JVM_INSTRUCTIONS_H

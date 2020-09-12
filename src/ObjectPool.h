@@ -3,8 +3,8 @@
 // Created by Alan Ihre on 2020-09-08.
 //
 
-#ifndef LAB7_OBJECTPOOL_H
-#define LAB7_OBJECTPOOL_H
+#ifndef BASIC_JVM_OBJECTPOOL_H
+#define BASIC_JVM_OBJECTPOOL_H
 
 #include <unordered_map>
 #include "ClassInstance.h"
@@ -42,4 +42,4 @@ public:
 };
 
 
-#endif //LAB7_OBJECTPOOL_H
+#endif //BASIC_JVM_OBJECTPOOL_H

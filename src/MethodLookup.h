@@ -2,8 +2,8 @@
 // Created by Alan Ihre on 2020-09-10.
 //
 
-#ifndef LAB7_METHODLOOKUP_H
-#define LAB7_METHODLOOKUP_H
+#ifndef BASIC_JVM_METHODLOOKUP_H
+#define BASIC_JVM_METHODLOOKUP_H
 
 #include "MethodTable.h"
 #include "ClassInstance.h"
@@ -41,4 +41,4 @@ inline Method *lookupStaticMethod(const std::string &signature, ClassFile *class
     throw MethodNotFoundException();
 }
 
-#endif //LAB7_METHODLOOKUP_H
+#endif //BASIC_JVM_METHODLOOKUP_H

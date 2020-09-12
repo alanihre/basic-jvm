@@ -2,8 +2,8 @@
 // Created by Alan Ihre on 2020-09-10.
 //
 
-#ifndef LAB7_METHODTABLE_H
-#define LAB7_METHODTABLE_H
+#ifndef BASIC_JVM_METHODTABLE_H
+#define BASIC_JVM_METHODTABLE_H
 
 #include <unordered_map>
 #include "ClassFile.h"
@@ -38,4 +38,4 @@ public:
 
 int countArguments(const std::string &methodDescriptor);
 
-#endif //LAB7_METHODTABLE_H
+#endif //BASIC_JVM_METHODTABLE_H

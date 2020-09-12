@@ -2,8 +2,8 @@
 // Created by Alan Ihre on 2020-09-11.
 //
 
-#ifndef LAB7_SYSTEMCLASSFILE_H
-#define LAB7_SYSTEMCLASSFILE_H
+#ifndef BASIC_JVM_SYSTEMCLASSFILE_H
+#define BASIC_JVM_SYSTEMCLASSFILE_H
 
 #include "../ClassFile.h"
 #include "ObjectClassFile.h"
@@ -183,4 +183,4 @@ struct SystemClassFile : public ClassFile {
     }
 };
 
-#endif //LAB7_SYSTEMCLASSFILE_H
+#endif //BASIC_JVM_SYSTEMCLASSFILE_H

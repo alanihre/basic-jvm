@@ -16,8 +16,8 @@
 #include "ClassFileLookup.h"
 #include "FieldLookup.h"
 
-#ifndef LAB7_INSTRUCTION_PARSER_H
-#define LAB7_INSTRUCTION_PARSER_H
+#ifndef BASIC_JVM_INSTRUCTION_PARSER_H
+#define BASIC_JVM_INSTRUCTION_PARSER_H
 
 
 class MethodRunner {
@@ -97,4 +97,4 @@ public:
     }
 };
 
-#endif //LAB7_INSTRUCTION_PARSER_H
+#endif //BASIC_JVM_INSTRUCTION_PARSER_H

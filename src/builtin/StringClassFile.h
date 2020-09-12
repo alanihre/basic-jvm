@@ -2,8 +2,8 @@
 // Created by Alan Ihre on 2020-09-08.
 //
 
-#ifndef LAB7_STRINGCLASSFILE_H
-#define LAB7_STRINGCLASSFILE_H
+#ifndef BASIC_JVM_STRINGCLASSFILE_H
+#define BASIC_JVM_STRINGCLASSFILE_H
 
 #include "../ClassFile.h"
 #include "ObjectClassFile.h"
@@ -156,4 +156,4 @@ struct StringClassFile : public ClassFile {
 };
 
 
-#endif //LAB7_STRINGCLASSFILE_H
+#endif //BASIC_JVM_STRINGCLASSFILE_H

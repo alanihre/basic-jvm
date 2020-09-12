@@ -2,8 +2,8 @@
 // Created by Alan Ihre on 2020-09-10.
 //
 
-#ifndef LAB7_FIELDTABLE_H
-#define LAB7_FIELDTABLE_H
+#ifndef BASIC_JVM_FIELDTABLE_H
+#define BASIC_JVM_FIELDTABLE_H
 
 #include <unordered_map>
 #include "ClassFile.h"
@@ -36,4 +36,4 @@ public:
 };
 
 
-#endif //LAB7_FIELDTABLE_H
+#endif //BASIC_JVM_FIELDTABLE_H

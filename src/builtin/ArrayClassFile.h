@@ -2,8 +2,8 @@
 // Created by Alan Ihre on 2020-09-08.
 //
 
-#ifndef LAB7_ARRAYCLASSFILE_H
-#define LAB7_ARRAYCLASSFILE_H
+#ifndef BASIC_JVM_ARRAYCLASSFILE_H
+#define BASIC_JVM_ARRAYCLASSFILE_H
 
 #include "../ClassFile.h"
 #include "ObjectClassFile.h"
@@ -83,4 +83,4 @@ struct ArrayClassFile : public ClassFile {
 };
 
 
-#endif //LAB7_ARRAYCLASSFILE_H
+#endif //BASIC_JVM_ARRAYCLASSFILE_H
