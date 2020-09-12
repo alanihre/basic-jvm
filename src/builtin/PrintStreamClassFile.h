@@ -75,7 +75,7 @@ struct PrintStreamClassFile : public ClassFile {
         size_t superClassStrLen = strlen(superClassUtf8) + 1;
         superClassUtf8CpInfo->length = superClassStrLen;
         superClassUtf8CpInfo->bytes = new u1[superClassUtf8CpInfo->length];
-        strcpy((char *) superClassUtf8CpInfo->bytes, thisClassUtf8);
+        strcpy((char *) superClassUtf8CpInfo->bytes, superClassUtf8);
         superClassUtf8CpInfo->bytes[superClassStrLen - 1] = '\0';
 
         cp_info *superClassClassCpEntry = &constant_pool[5];
