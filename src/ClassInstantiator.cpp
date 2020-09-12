@@ -9,20 +9,16 @@ ClassInstantiator::ClassInstantiator(ClassFileLookup *classFileLookup, ObjectPoo
     this->objectPool = objectPool;
 }
 
-ClassInstance *ClassInstantiator::newInstance(const std::string &className, ObjectRef objectRef) {
-    ClassInstance *classInstance = objectPool->getObject(objectRef);
-
+void ClassInstantiator::newInstance(const std::string &className, ObjectRef objectRef) {
     ClassFile *classFile = classFileLookup->getClassFile(className);
-    ClassInstance *parentInstance = nullptr;
+    ObjectRef parentRef = 0;
 
     if (classFile->super_class != 0) {
         std::string superClassName = classFile->superClassFile->className;
 
-        int superObjectRef = objectPool->newObjectRef();
-        parentInstance = newInstance(superClassName, superObjectRef);
+        parentRef = objectPool->newObjectRef();
+        newInstance(superClassName, parentRef);
     }
 
-    classInstance->initializeObject(classFile, parentInstance);
-
-    return classInstance;
+    objectPool->getObject(objectRef)->initializeObject(classFile, parentRef);
 }

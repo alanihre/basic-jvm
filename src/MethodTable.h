@@ -36,5 +36,6 @@ public:
     Method *getMethod(const std::string &signature);
 };
 
+int countArguments(const std::string &methodDescriptor);
 
 #endif //LAB7_METHODTABLE_H

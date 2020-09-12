@@ -7,19 +7,21 @@
 
 #include "ClassFile.h"
 #include <string>
+#include "ObjectPool.h"
+#include <vector>
+
+typedef int ObjectRef;
 
 class ClassInstance {
 public:
     ClassFile *classFile;
-    ClassInstance *parentInstance;
-    int *instanceData;
+    ObjectRef parentRef;
+    std::vector<int> instanceData;
     int instanceDataSize;
 
     ClassInstance() = default;
 
-    ~ClassInstance();
-
-    void initializeObject(ClassFile *classFile, ClassInstance *parentInstance);
+    void initializeObject(ClassFile *classFile, ObjectRef parentRef);
 
     void initializeArray(ClassFile *classFile, int size);
 

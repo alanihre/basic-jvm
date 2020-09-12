@@ -17,7 +17,7 @@ private:
 public:
     explicit ClassInstantiator(ClassFileLookup *classFileLookup, ObjectPool *objectPool);
 
-    ClassInstance *newInstance(const std::string &className, ObjectRef objectRef);
+    void newInstance(const std::string &className, ObjectRef objectRef);
 };
 
 

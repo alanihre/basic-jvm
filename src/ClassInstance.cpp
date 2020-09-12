@@ -5,28 +5,23 @@
 #include "ClassInstance.h"
 #include <cstdlib>
 
-void ClassInstance::initializeObject(ClassFile *_classFile, ClassInstance *_parentInstance) {
-    this->classFile = _classFile;
-    this->parentInstance = _parentInstance;
+void ClassInstance::initializeObject(ClassFile *classFile, ObjectRef parentRef) {
+    this->classFile = classFile;
+    this->parentRef = parentRef;
 
-    if (instanceData != nullptr) {
-        free(instanceData);
-    }
-    instanceData = (int *) calloc(classFile->fields_count, sizeof(int));
     instanceDataSize = classFile->fields_count;
+    instanceData = std::vector<int>(classFile->fields_count, 0);
 }
 
 void ClassInstance::initializeArray(ClassFile *_classFile, int size) {
     this->classFile = _classFile;
-    this->parentInstance = nullptr;
+    this->parentRef = 0;
 
-    if (instanceData != nullptr) {
-        free(instanceData);
-    }
-    instanceData = (int *) calloc(size, sizeof(int));
+    instanceDataSize = size + 1;
+
+    instanceData = std::vector<int>(instanceDataSize, 0);
 
     //Length field
-    instanceDataSize = size + 1;
     instanceData[0] = size;
 }
 
@@ -57,8 +52,4 @@ void ClassInstance::putArrayElement(int index, int value) {
         throw ArrayIndexOutOfBoundsException();
     }
     instanceData[index + 1] = value;
-}
-
-ClassInstance::~ClassInstance() {
-    free(instanceData);
 }

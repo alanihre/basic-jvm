@@ -16,18 +16,21 @@ public:
 };
 
 
-inline Field *lookupField(const std::string &name, ClassInstance *classInstance, ClassInstance **resultClassInstance) {
-    ClassInstance *currentInstance = classInstance;
-    while (currentInstance != nullptr) {
-        Field *field = currentInstance->classFile->fieldTable->getField(name);
-        if (field != nullptr) {
-            *resultClassInstance = currentInstance;
-            return field;
-        }
-        currentInstance = currentInstance->parentInstance;
+inline Field *lookupField(const std::string &name, const std::string &className, ObjectRef objectRef, ObjectRef *resultObjectRef, ObjectPool *objectPool) {
+    ObjectRef currentObjectRef = objectRef;
+    while (currentObjectRef != 0 && objectPool->getObject(currentObjectRef)->classFile->className != className) {
+        currentObjectRef = objectPool->getObject(currentObjectRef)->parentRef;
     }
+    if (currentObjectRef == 0) {
+        throw FieldNotFoundException();
 
-    throw FieldNotFoundException();
+    }
+    Field *field = objectPool->getObject(currentObjectRef)->classFile->fieldTable->getField(name);
+    if (field == nullptr) {
+        throw FieldNotFoundException();
+    }
+    *resultObjectRef = currentObjectRef;
+    return field;
 }
 
 inline Field *lookupStaticField(const std::string &name, ClassFile *classFile) {

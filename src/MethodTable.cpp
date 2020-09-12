@@ -28,7 +28,6 @@ int countArguments(const std::string &methodDescriptor) {
             case FIELD_TYPE_LONG: // Fall through
             case FIELD_TYPE_SHORT: // Fall through
             case FIELD_TYPE_BOOLEAN: // Fall through
-            case FIELD_TYPE_ARRAY: // Fall through
             case FIELD_TYPE_CHAR: {
                 count++;
                 break;
@@ -37,6 +36,13 @@ int countArguments(const std::string &methodDescriptor) {
                 do {
                     it++;
                 } while (*it != ';');
+                count++;
+                break;
+            }
+            case FIELD_TYPE_ARRAY: {
+                do {
+                    it++;
+                } while (*it == '[');
                 count++;
                 break;
             }

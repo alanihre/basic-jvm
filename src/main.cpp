@@ -37,16 +37,15 @@ int main(int argc, char *argv[]) {
     int numArgs = argc - 2;
     int *args = new int[1];
     ObjectRef argsArrayRef = objectPool.newObjectRef();
-    ClassInstance *classInstance = objectPool.getObject(argsArrayRef);
     ClassFile *arrayClassFile = classFileLookup.getClassFile(std::string(BUILTIN_ARRAY_CLASS_NAME));
-    classInstance->initializeArray(arrayClassFile, numArgs);
+    objectPool.getObject(argsArrayRef)->initializeArray(arrayClassFile, numArgs);
     for (int i = 0; i < numArgs; ++i) {
         ObjectRef stringRef = stringPool.getStringInstanceRef(std::string(argv[i + 2]));
-        classInstance->putArrayElement(i, stringRef);
+        objectPool.getObject(argsArrayRef)->putArrayElement(i, stringRef);
     }
     args[0] = argsArrayRef;
 
-    Method *method = lookupMethod("main([Ljava/lang/String;)V", mainClass);
+    Method *method = lookupStaticMethod("main([Ljava/lang/String;)V", mainClass);
     MethodRunner methodRunner(method->codeAttribute, mainClass, operandStack, numArgs, args, &stringPool, &objectPool,
                               &classInstantiator, &classFileLookup);
     methodRunner.run();

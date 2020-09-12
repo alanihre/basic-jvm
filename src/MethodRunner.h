@@ -54,6 +54,8 @@ protected:
     int calculateJumpAddress();
 
     void handleReturn();
+
+    int readTwoBytes();
 };
 
 class InstructionNotImplementedException : public std::exception {

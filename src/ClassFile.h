@@ -10,6 +10,7 @@
 #include "FieldTable.h"
 #include "ByteTypes.h"
 #include <string>
+#include "Endian.h"
 
 #define CONSTANT_TYPE_CLASS 7
 #define CONSTANT_TYPE_FIELD_REF 9
@@ -51,16 +52,6 @@
 #define FIELD_TYPE_SHORT 'S' //signed short
 #define FIELD_TYPE_BOOLEAN 'Z' //boolean true or false
 #define FIELD_TYPE_ARRAY '[' //one array dimension
-
-inline void SwapEndian(u2 &val) {
-    val = (val << 8) | (val >> 8);
-}
-
-inline void SwapEndian(u4 &val) {
-    val = (val << 24) | ((val << 8) & 0x00ff0000) |
-          ((val >> 8) & 0x0000ff00) | (val >> 24);
-}
-
 
 struct cp_info {
     u1 tag;

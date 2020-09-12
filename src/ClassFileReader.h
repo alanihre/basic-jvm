@@ -9,20 +9,7 @@
 #include <fstream>
 #include "ClassFile.h"
 #include "ClassFileLookup.h"
-
-enum ENDIANNESS {
-    LITTLEENDIAN, BIGENDIAN
-};
-
-ENDIANNESS CheckArchEndianalityV1(void) {
-    int Endian = 0x00000001; // assuming target architecture is 32-bit
-
-    // as Endian = 0x00000001 so MSB (Most Significant Byte) = 0x00 and LSB (Least     Significant Byte) = 0x01
-    // casting down to a single byte value LSB discarding higher bytes
-
-    return (*(char *) &Endian == 0x01) ? LITTLEENDIAN : BIGENDIAN;
-}
-
+#include "Endian.h"
 
 inline void
 parseAttributeInfo(attribute_info *attributeInfo, cp_info *constantPool, std::fstream *fh, ENDIANNESS endian) {

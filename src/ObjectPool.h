@@ -8,6 +8,7 @@
 
 #include <unordered_map>
 #include "ClassInstance.h"
+#include <vector>
 
 #define INITIAL_POOL_SIZE 100
 #define POOL_SIZE_CHUNK 100
@@ -15,9 +16,11 @@
 
 typedef int ObjectRef;
 
+class ClassInstance;
+
 class ObjectPool {
 private:
-    ClassInstance *objects;
+    std::vector<ClassInstance> objects;
     int size;
     int capacity;
 
@@ -25,8 +28,6 @@ private:
 
 public:
     ObjectPool();
-
-    ~ObjectPool();
 
     int newObjectRef();
 

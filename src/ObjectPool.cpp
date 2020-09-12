@@ -5,19 +5,15 @@
 #include "ObjectPool.h"
 
 ObjectPool::ObjectPool() {
-    objects = new ClassInstance[INITIAL_POOL_SIZE];
     size = 0;
     capacity = INITIAL_POOL_SIZE;
-}
-
-ObjectPool::~ObjectPool() {
-    delete[] objects;
+    objects = std::vector<ClassInstance>(capacity);
 }
 
 void ObjectPool::increaseSizeIfRequired() {
     if (size == capacity) {
         capacity += POOL_SIZE_CHUNK;
-        objects = (ClassInstance *) realloc(objects, capacity);
+        objects.resize(capacity);
     }
 }
 

@@ -172,7 +172,7 @@ void MethodRunner::runInstruction() {
         case SIPUSH: {
             uint8_t byte1 = next();
             uint8_t byte2 = next();
-            int res = (byte1 << 8) | byte2; // NOLINT(hicpp-signed-bitwise)
+            int16_t res = (byte1 << 8) | byte2; // NOLINT(hicpp-signed-bitwise)
             operandStack->push(res);
             break;
         }
@@ -404,7 +404,7 @@ void MethodRunner::runInstruction() {
             uint8_t branchByte2 = next();
             uint8_t branchByte3 = next();
             uint8_t branchByte4 = next();
-            int jumpOffset = (branchByte1 << 24) | (branchByte2 << 16) | (branchByte3 << 8) |
+            int32_t jumpOffset = (branchByte1 << 24) | (branchByte2 << 16) | (branchByte3 << 8) |
                              branchByte4; // NOLINT(hicpp-signed-bitwise)
             int jumpAddr = pc + jumpOffset;
             jump(jumpAddr);
@@ -416,6 +416,9 @@ void MethodRunner::runInstruction() {
             if (value == 0) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
+            } else {
+                next();
+                next();
             }
             break;
         }
@@ -425,6 +428,9 @@ void MethodRunner::runInstruction() {
             if (value != 0) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
+            } else {
+                next();
+                next();
             }
             break;
         }
@@ -434,6 +440,9 @@ void MethodRunner::runInstruction() {
             if (value < 0) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
+            } else {
+                next();
+                next();
             }
             break;
         }
@@ -443,6 +452,9 @@ void MethodRunner::runInstruction() {
             if (value >= 0) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
+            } else {
+                next();
+                next();
             }
             break;
         }
@@ -452,6 +464,9 @@ void MethodRunner::runInstruction() {
             if (value > 0) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
+            } else {
+                next();
+                next();
             }
             break;
         }
@@ -461,6 +476,9 @@ void MethodRunner::runInstruction() {
             if (value <= 0) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
+            } else {
+                next();
+                next();
             }
             break;
         }
@@ -472,6 +490,9 @@ void MethodRunner::runInstruction() {
             if (value1 == value2) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
+            } else {
+                next();
+                next();
             }
             break;
         }
@@ -483,6 +504,9 @@ void MethodRunner::runInstruction() {
             if (value1 != value2) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
+            } else {
+                next();
+                next();
             }
             break;
         }
@@ -494,6 +518,9 @@ void MethodRunner::runInstruction() {
             if (value1 < value2) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
+            } else {
+                next();
+                next();
             }
             break;
         }
@@ -505,6 +532,9 @@ void MethodRunner::runInstruction() {
             if (value1 <= value2) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
+            } else {
+                next();
+                next();
             }
             break;
         }
@@ -516,6 +546,9 @@ void MethodRunner::runInstruction() {
             if (value1 > value2) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
+            } else {
+                next();
+                next();
             }
             break;
         }
@@ -527,6 +560,9 @@ void MethodRunner::runInstruction() {
             if (value1 >= value2) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
+            } else {
+                next();
+                next();;
             }
             break;
         }
@@ -540,7 +576,7 @@ void MethodRunner::runInstruction() {
             uint8_t branchByte2 = next();
             uint8_t branchByte3 = next();
             uint8_t branchByte4 = next();
-            int jumpOffset = (branchByte1 << 24) | (branchByte2 << 16) | (branchByte3 << 8) |
+            int32_t jumpOffset = (branchByte1 << 24) | (branchByte2 << 16) | (branchByte3 << 8) |
                              branchByte4; // NOLINT(hicpp-signed-bitwise)
             int jumpAddr = pc + jumpOffset;
             jump(jumpAddr);
@@ -564,6 +600,9 @@ void MethodRunner::runInstruction() {
             if (value1 == value2) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
+            } else {
+                next();
+                next();
             }
             break;
         }
@@ -575,6 +614,9 @@ void MethodRunner::runInstruction() {
             if (value1 != value2) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
+            } else {
+                next();
+                next();
             }
             break;
         }
@@ -584,6 +626,9 @@ void MethodRunner::runInstruction() {
             if (value != NULL_REF) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
+            } else {
+                next();
+                next();
             }
             break;
         }
@@ -593,6 +638,9 @@ void MethodRunner::runInstruction() {
             if (value == NULL_REF) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
+            } else {
+                next();
+                next();
             }
             break;
         }
@@ -602,7 +650,7 @@ void MethodRunner::runInstruction() {
             if (instr == LDC_W) {
                 uint8_t indexByte1 = next();
                 uint8_t indexByte2 = next();
-                index = (indexByte1 << 8) | indexByte2; // NOLINT(hicpp-signed-bitwise)
+                index = (uint16_t) ((indexByte1 << 8) | indexByte2); // NOLINT(hicpp-signed-bitwise)
             } else {
                 index = next();
             }
@@ -622,7 +670,7 @@ void MethodRunner::runInstruction() {
                     cp_info utf8Entry = classFile->constant_pool[stringInfo->string_index - 1];
                     auto *utf8Info = (CONSTANT_Utf8_info *) utf8Entry.info;
                     const char *stringValue = (char *) utf8Info->bytes;
-                    int stringRef = stringPool->getStringInstanceRef(stringValue);
+                    ObjectRef stringRef = stringPool->getStringInstanceRef(stringValue);
                     value = stringRef;
                     break;
                 }
@@ -689,11 +737,11 @@ void MethodRunner::runInstruction() {
 
             std::string signature = std::string(methodName) + std::string(descriptor);
 
-            ClassFile *methodClassFile = classFileLookup->getClassFile(std::string(className));
-            Method *method = lookupMethod(signature, methodClassFile);
-
             //This-argument and the other arguments
-            int numArgs = method->numArguments + 1;
+            int numArgs = countArguments(std::string(descriptor));
+            if (instr == INVOKE_VIRTUAL || instr == INVOKE_SPECIAL) {
+                numArgs++;
+            }
             int *args = new int[numArgs];
             for (int i = numArgs - 1; i >= 0; --i) {
                 int value = operandStack->top();
@@ -701,11 +749,19 @@ void MethodRunner::runInstruction() {
                 args[i] = value;
             }
 
+            Method *method;
+            ObjectRef objectRef;
             if (instr == INVOKE_VIRTUAL || instr == INVOKE_SPECIAL) {
-                ObjectRef objectRef = args[numArgs - 1];
+                objectRef = args[0];
                 if (objectRef == NULL_REF) {
                     throw NullPointerException();
                 }
+            }
+            if (instr == INVOKE_VIRTUAL) {
+                method = lookupMethod(signature, objectRef, objectPool);
+            } else if (instr == INVOKE_STATIC || instr == INVOKE_SPECIAL) {
+                ClassFile *methodClassFile = classFileLookup->getClassFile(std::string(className));
+                method = lookupStaticMethod(signature, methodClassFile);
             }
 
             MethodRunner methodRunner(method->codeAttribute, method->classFile, operandStack, numArgs, args, stringPool,
@@ -750,13 +806,12 @@ void MethodRunner::runInstruction() {
             auto *descriptorInfo = (CONSTANT_Utf8_info *) fieldDescriptorEntry.info;
             const char *descriptor = (char *) descriptorInfo->bytes;
 
-            ClassInstance *classInstance = objectPool->getObject(objectRef);
-            ClassInstance *resultClassInstance = nullptr;
+            ObjectRef resultObjectRef = 0;
 
             ClassFile *fieldClassFile = classFileLookup->getClassFile(std::string(className));
-            Field *field = lookupField(fieldName, classInstance, &resultClassInstance);
+            Field *field = lookupField(fieldName, className, objectRef, &resultObjectRef, objectPool);
 
-            resultClassInstance->putField(field->index, value);
+            objectPool->getObject(resultObjectRef)->putField(field->index, value);
 
             break;
         }
@@ -860,12 +915,11 @@ void MethodRunner::runInstruction() {
             const char *descriptor = (char *) descriptorInfo->bytes;
 
 
-            ClassInstance *classInstance = objectPool->getObject(objectRef);
-            ClassInstance *resultClassInstance = nullptr;
+            ObjectRef resultObjectRef = 0;
 
             ClassFile *fieldClassFile = classFileLookup->getClassFile(std::string(className));
-            Field *field = lookupField(fieldName, classInstance, &resultClassInstance);
-            int value = resultClassInstance->getField(field->index);
+            Field *field = lookupField(fieldName, className, objectRef, &resultObjectRef, objectPool);
+            int value = objectPool->getObject(resultObjectRef)->getField(field->index);
 
             operandStack->push(value);
             break;
@@ -878,10 +932,9 @@ void MethodRunner::runInstruction() {
             uint8_t arrayType = next();
 
             ObjectRef objectRef = objectPool->newObjectRef();
-            ClassInstance *classInstance = objectPool->getObject(objectRef);
 
             ClassFile *arrayClassFile = classFileLookup->getClassFile(std::string(BUILTIN_ARRAY_CLASS_NAME));
-            classInstance->initializeArray(arrayClassFile, count);
+            objectPool->getObject(objectRef)->initializeArray(arrayClassFile, count);
 
             operandStack->push(objectRef);
             break;
@@ -894,10 +947,8 @@ void MethodRunner::runInstruction() {
                 throw NullPointerException();
             }
 
-            ClassInstance *classInstance = objectPool->getObject(arrayRef);
-
             //Length is in field 0
-            int length = classInstance->getField(0);
+            int length = objectPool->getObject(arrayRef)->getField(0);
             operandStack->push(length);
 
             break;
@@ -915,9 +966,7 @@ void MethodRunner::runInstruction() {
                 throw NullPointerException();
             }
 
-            ClassInstance *classInstance = objectPool->getObject(arrayRef);
-
-            int value = classInstance->getArrayElement(index);
+            int value = objectPool->getObject(arrayRef)->getArrayElement(index);
             operandStack->push(value);
 
             break;
@@ -937,26 +986,22 @@ void MethodRunner::runInstruction() {
                 throw NullPointerException();
             }
 
-            ClassInstance *classInstance = objectPool->getObject(arrayRef);
-
-            classInstance->putArrayElement(index, value);
+            objectPool->getObject(arrayRef)->putArrayElement(index, value);
             break;
         }
         case INTERNAL_PRINTLN: {
             int stringObjectRef = operandStack->top();
             operandStack->pop();
 
-            ClassInstance *classInstance = objectPool->getObject(stringObjectRef);
-            ClassInstance *resultClassInstance = nullptr;
+            ObjectRef resultObjectRef = 0;
 
-            Field *field = lookupField(BUILTIN_STRING_CLASS_VALUE_FIELD, classInstance, &resultClassInstance);
-            ObjectRef valueArrayRef = resultClassInstance->getField(field->index);
+            Field *field = lookupField(BUILTIN_STRING_CLASS_VALUE_FIELD, "String", stringObjectRef, &resultObjectRef, objectPool);
+            ObjectRef valueArrayRef = objectPool->getObject(resultObjectRef)->getField(field->index);
 
-            ClassInstance *charArrayObject = objectPool->getObject(valueArrayRef);
-            int length = charArrayObject->getField(0);
+            int length = objectPool->getObject(valueArrayRef)->getField(0);
 
             for (int i = 0; i < length; ++i) {
-                char c = charArrayObject->getArrayElement(i) &
+                char c = objectPool->getObject(valueArrayRef)->getArrayElement(i) &
                          CHAR_MASK; // NOLINT(hicpp-signed-bitwise,cppcoreguidelines-narrowing-conversions)
                 std::cout << c;
             }
@@ -976,9 +1021,10 @@ void MethodRunner::pushReturnAddress() {
 }
 
 int MethodRunner::calculateJumpAddress() {
-    uint8_t branchByte1 = next();
-    uint8_t branchByte2 = next();
-    int jumpOffset = (branchByte1 << 8) | branchByte2; // NOLINT(hicpp-signed-bitwise)
+    u1 branchByte1 = next();
+    u1 branchByte2 = next();
+    int16_t jumpOffset = (branchByte1 << 8) | branchByte2; // NOLINT(hicpp-signed-bitwise)
+
     //-2 for the two branch bytes and -1 since pc was increased by 1 during the call to next
     int jumpAddr = pc + jumpOffset - 2 - 1;
     return jumpAddr;

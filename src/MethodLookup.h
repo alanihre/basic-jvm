@@ -15,7 +15,20 @@ public:
     }
 };
 
-inline Method *lookupMethod(const std::string &signature, ClassFile *classFile) {
+inline Method *lookupMethod(const std::string &signature, ObjectRef objectRef, ObjectPool *objectPool) {
+    ObjectRef currentObjectRef = objectRef;
+    while (currentObjectRef != 0) {
+        Method *method = objectPool->getObject(currentObjectRef)->classFile->methodTable->getMethod(signature);
+        if (method != nullptr) {
+            return method;
+        }
+        currentObjectRef = objectPool->getObject(currentObjectRef)->parentRef;
+    }
+
+    throw MethodNotFoundException();
+}
+
+inline Method *lookupStaticMethod(const std::string &signature, ClassFile *classFile) {
     ClassFile *currentClassFile = classFile;
     while (currentClassFile != nullptr) {
         Method *method = currentClassFile->methodTable->getMethod(signature);
