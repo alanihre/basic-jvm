@@ -58,8 +58,8 @@
 - invokestatic
 - invokevirtual
 - new
-- ldc
-- ldc_w
+- ldc (only string and integer constants supported)
+- ldc_w (only string and integer constants supported)
 - newarray
 - arraylength
 - iaload
