@@ -42,6 +42,7 @@ protected:
     Code_attribute *code;
     ClassFile *classFile;
     int pc = 0;
+    int stackEntrySize;
 
     void runInstruction();
 
@@ -54,6 +55,8 @@ protected:
     int calculateJumpAddress();
 
     void handleReturn();
+
+    int popOperand();
 
     int readTwoBytes();
 };
@@ -94,6 +97,13 @@ class NullPointerException : public std::exception {
 public:
     virtual const char *what() const throw() {
         return "Pointer is null";
+    }
+};
+
+class StackFrameAccessOutOfBoundsException : public std::exception {
+public:
+    virtual const char *what() const throw() {
+        return "Trying to pop from outside of the stack frame";
     }
 };
 

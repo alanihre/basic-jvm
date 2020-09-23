@@ -28,6 +28,7 @@ MethodRunner::MethodRunner(Code_attribute *code, ClassFile *classFile, std::stac
         locals[i] = args[i];
     }
     instructions = (uint8_t *) code->code;
+    stackEntrySize = operandStack->size();
 }
 
 void MethodRunner::run() {
@@ -54,112 +55,99 @@ void MethodRunner::handleReturn() {
     shouldReturn = true;
 }
 
+int MethodRunner::popOperand() {
+    if (operandStack->size() <= stackEntrySize)  {
+        throw StackFrameAccessOutOfBoundsException();
+    } else {
+        int operand = operandStack->top();
+        operandStack->pop();
+        return operand;
+    }
+}
+
 void MethodRunner::runInstruction() {
     uint8_t instr = next();
 
     switch (instr) {
         case IADD: {
-            int value2 = operandStack->top();
-            operandStack->pop();
-            int value1 = operandStack->top();
-            operandStack->pop();
+            int value2 = popOperand();
+            int value1 = popOperand();
             int res = value1 + value2;
             operandStack->push(res);
             break;
         }
         case ISUB: {
-            int value2 = operandStack->top();
-            operandStack->pop();
-            int value1 = operandStack->top();
-            operandStack->pop();
+            int value2 = popOperand();
+            int value1 = popOperand();
             int res = value1 - value2;
             operandStack->push(res);
             break;
         }
         case IMUL: {
-            int value2 = operandStack->top();
-            operandStack->pop();
-            int value1 = operandStack->top();
-            operandStack->pop();
+            int value2 = popOperand();
+            int value1 = popOperand();
             int res = value1 * value2;
             operandStack->push(res);
             break;
         }
         case IDIV: {
-            int value2 = operandStack->top();
-            operandStack->pop();
-            int value1 = operandStack->top();
-            operandStack->pop();
+            int value2 = popOperand();
+            int value1 = popOperand();
             int res = value1 / value2;
             operandStack->push(res);
             break;
         }
         case IAND: {
-            int value2 = operandStack->top();
-            operandStack->pop();
-            int value1 = operandStack->top();
-            operandStack->pop();
+            int value2 = popOperand();
+            int value1 = popOperand();
             int res = value1 & value2; // NOLINT(hicpp-signed-bitwise)
             operandStack->push(res);
             break;
         }
         case IOR: {
-            int value2 = operandStack->top();
-            operandStack->pop();
-            int value1 = operandStack->top();
-            operandStack->pop();
+            int value2 = popOperand();
+            int value1 = popOperand();
             int res = value1 | value2; // NOLINT(hicpp-signed-bitwise)
             operandStack->push(res);
             break;
         }
         case IXOR: {
-            int value2 = operandStack->top();
-            operandStack->pop();
-            int value1 = operandStack->top();
-            operandStack->pop();
+            int value2 = popOperand();
+            int value1 = popOperand();
             int res = value1 ^value2; // NOLINT(hicpp-signed-bitwise)
             operandStack->push(res);
             break;
         }
         case IREM: {
-            int value2 = operandStack->top();
-            operandStack->pop();
-            int value1 = operandStack->top();
-            operandStack->pop();
+            int value2 = popOperand();
+            int value1 = popOperand();
             int res = value1 % value2;
             operandStack->push(res);
             break;
         }
         case INEG: {
-            int value = operandStack->top();
-            operandStack->pop();
+            int value = popOperand();
             int res = -value;
             operandStack->push(res);
             break;
         }
         case ISHL: {
-            int shamt = operandStack->top();
-            operandStack->pop();
-            int value1 = operandStack->top();
-            operandStack->pop();
+            int shamt = popOperand();
+            int value1 = popOperand();
             int res = value1 << (shamt & SHAMT_MASK); // NOLINT(hicpp-signed-bitwise)
             operandStack->push(res);
             break;
         }
         case ISHR: {
-            int shamt = operandStack->top();
-            operandStack->pop();
-            int value1 = operandStack->top();
-            operandStack->pop();
+            int shamt = popOperand();
+            int value1 = popOperand();
             int res = value1 >> (shamt & SHAMT_MASK); // NOLINT(hicpp-signed-bitwise)
             operandStack->push(res);
             break;
         }
         case IUSHR: {
-            int shamt = operandStack->top();
-            operandStack->pop();
-            int value1 = operandStack->top();
-            operandStack->pop();
+            int shamt = popOperand();
+            int value1 = popOperand();
             int res = (int) ((unsigned int) value1 >> (shamt & SHAMT_MASK)); // NOLINT(hicpp-signed-bitwise)
             operandStack->push(res);
             break;
@@ -201,10 +189,8 @@ void MethodRunner::runInstruction() {
             operandStack->push(operandStack->top());
             break;
         case DUP_X1: {
-            int value1 = operandStack->top();
-            operandStack->pop();
-            int value2 = operandStack->top();
-            operandStack->pop();
+            int value1 = popOperand();
+            int value2 = popOperand();
 
             operandStack->push(value1);
             operandStack->push(value2);
@@ -212,12 +198,9 @@ void MethodRunner::runInstruction() {
             break;
         }
         case DUP_X2: {
-            int value1 = operandStack->top();
-            operandStack->pop();
-            int value2 = operandStack->top();
-            operandStack->pop();
-            int value3 = operandStack->top();
-            operandStack->pop();
+            int value1 = popOperand();
+            int value2 = popOperand();
+            int value3 = popOperand();
 
             operandStack->push(value1);
             operandStack->push(value3);
@@ -226,10 +209,8 @@ void MethodRunner::runInstruction() {
             break;
         }
         case DUP2: {
-            int value1 = operandStack->top();
-            operandStack->pop();
-            int value2 = operandStack->top();
-            operandStack->pop();
+            int value1 = popOperand();
+            int value2 = popOperand();
 
             operandStack->push(value2);
             operandStack->push(value1);
@@ -238,12 +219,9 @@ void MethodRunner::runInstruction() {
             break;
         }
         case DUP2_X1: {
-            int value1 = operandStack->top();
-            operandStack->pop();
-            int value2 = operandStack->top();
-            operandStack->pop();
-            int value3 = operandStack->top();
-            operandStack->pop();
+            int value1 = popOperand();
+            int value2 = popOperand();
+            int value3 = popOperand();
 
             operandStack->push(value2);
             operandStack->push(value1);
@@ -253,14 +231,10 @@ void MethodRunner::runInstruction() {
             break;
         }
         case DUP2_X2: {
-            int value1 = operandStack->top();
-            operandStack->pop();
-            int value2 = operandStack->top();
-            operandStack->pop();
-            int value3 = operandStack->top();
-            operandStack->pop();
-            int value4 = operandStack->top();
-            operandStack->pop();
+            int value1 = popOperand();
+            int value2 = popOperand();
+            int value3 = popOperand();
+            int value4 = popOperand();
 
             operandStack->push(value2);
             operandStack->push(value1);
@@ -273,17 +247,15 @@ void MethodRunner::runInstruction() {
         case NOP:
             break;
         case POP:
-            operandStack->pop();
+            popOperand();
             break;
         case POP2:
-            operandStack->pop();
-            operandStack->pop();
+            popOperand();
+            popOperand();
             break;
         case SWAP: {
-            int value1 = operandStack->top();
-            operandStack->pop();
-            int value2 = operandStack->top();
-            operandStack->pop();
+            int value1 = popOperand();
+            int value2 = popOperand();
 
             operandStack->push(value1);
             operandStack->push(value2);
@@ -323,36 +295,31 @@ void MethodRunner::runInstruction() {
         case ISTORE: // Fall through
         case ASTORE: {
             uint8_t index = next();
-            int value = operandStack->top();
-            operandStack->pop();
+            int value = popOperand();
             locals[index] = value;
             break;
         }
         case ISTORE_0: // Fall through
         case ASTORE_0: {
-            int value = operandStack->top();
-            operandStack->pop();
+            int value = popOperand();
             locals[0] = value;
             break;
         }
         case ISTORE_1: // Fall through
         case ASTORE_1: {
-            int value = operandStack->top();
-            operandStack->pop();
+            int value = popOperand();
             locals[1] = value;
             break;
         }
         case ISTORE_2: // Fall through
         case ASTORE_2: {
-            int value = operandStack->top();
-            operandStack->pop();
+            int value = popOperand();
             locals[2] = value;
             break;
         }
         case ISTORE_3: // Fall through
         case ASTORE_3: {
-            int value = operandStack->top();
-            operandStack->pop();
+            int value = popOperand();
             locals[3] = value;
             break;
         }
@@ -363,22 +330,19 @@ void MethodRunner::runInstruction() {
             break;
         }
         case I2B: {
-            int value = operandStack->top();
-            operandStack->pop();
+            int value = popOperand();
             int res = value & BYTE_MASK; // NOLINT(hicpp-signed-bitwise)
             operandStack->push(res);
             break;
         }
         case I2C: {
-            int value = operandStack->top();
-            operandStack->pop();
+            int value = popOperand();
             int res = value & CHAR_MASK; // NOLINT(hicpp-signed-bitwise)
             operandStack->push(res);
             break;
         }
         case I2S: {
-            int value = operandStack->top();
-            operandStack->pop();
+            int value = popOperand();
             int res = value & SHORT_MASK; // NOLINT(hicpp-signed-bitwise)
             operandStack->push(res);
             break;
@@ -411,8 +375,7 @@ void MethodRunner::runInstruction() {
             break;
         }
         case IFEQ: {
-            int value = operandStack->top();
-            operandStack->pop();
+            int value = popOperand();
             if (value == 0) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
@@ -423,8 +386,7 @@ void MethodRunner::runInstruction() {
             break;
         }
         case IFNE: {
-            int value = operandStack->top();
-            operandStack->pop();
+            int value = popOperand();
             if (value != 0) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
@@ -435,8 +397,7 @@ void MethodRunner::runInstruction() {
             break;
         }
         case IFLT: {
-            int value = operandStack->top();
-            operandStack->pop();
+            int value = popOperand();
             if (value < 0) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
@@ -447,8 +408,7 @@ void MethodRunner::runInstruction() {
             break;
         }
         case IFGE: {
-            int value = operandStack->top();
-            operandStack->pop();
+            int value = popOperand();
             if (value >= 0) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
@@ -459,8 +419,7 @@ void MethodRunner::runInstruction() {
             break;
         }
         case IFGT: {
-            int value = operandStack->top();
-            operandStack->pop();
+            int value = popOperand();
             if (value > 0) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
@@ -471,8 +430,7 @@ void MethodRunner::runInstruction() {
             break;
         }
         case IFLE: {
-            int value = operandStack->top();
-            operandStack->pop();
+            int value = popOperand();
             if (value <= 0) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
@@ -483,10 +441,8 @@ void MethodRunner::runInstruction() {
             break;
         }
         case IF_ICMPEQ: {
-            int value2 = operandStack->top();
-            operandStack->pop();
-            int value1 = operandStack->top();
-            operandStack->pop();
+            int value2 = popOperand();
+            int value1 = popOperand();
             if (value1 == value2) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
@@ -497,10 +453,8 @@ void MethodRunner::runInstruction() {
             break;
         }
         case IF_ICMPNE: {
-            int value2 = operandStack->top();
-            operandStack->pop();
-            int value1 = operandStack->top();
-            operandStack->pop();
+            int value2 = popOperand();
+            int value1 = popOperand();
             if (value1 != value2) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
@@ -511,10 +465,8 @@ void MethodRunner::runInstruction() {
             break;
         }
         case IF_ICMPLT: {
-            int value2 = operandStack->top();
-            operandStack->pop();
-            int value1 = operandStack->top();
-            operandStack->pop();
+            int value2 = popOperand();
+            int value1 = popOperand();
             if (value1 < value2) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
@@ -525,10 +477,8 @@ void MethodRunner::runInstruction() {
             break;
         }
         case IF_ICMPLE: {
-            int value2 = operandStack->top();
-            operandStack->pop();
-            int value1 = operandStack->top();
-            operandStack->pop();
+            int value2 = popOperand();
+            int value1 = popOperand();
             if (value1 <= value2) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
@@ -539,10 +489,8 @@ void MethodRunner::runInstruction() {
             break;
         }
         case IF_ICMPGT: {
-            int value2 = operandStack->top();
-            operandStack->pop();
-            int value1 = operandStack->top();
-            operandStack->pop();
+            int value2 = popOperand();
+            int value1 = popOperand();
             if (value1 > value2) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
@@ -553,10 +501,8 @@ void MethodRunner::runInstruction() {
             break;
         }
         case IF_ICMPGE: {
-            int value2 = operandStack->top();
-            operandStack->pop();
-            int value1 = operandStack->top();
-            operandStack->pop();
+            int value2 = popOperand();
+            int value1 = popOperand();
             if (value1 >= value2) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
@@ -593,10 +539,8 @@ void MethodRunner::runInstruction() {
             break;
         }
         case IF_ACMPEQ: {
-            int value2 = operandStack->top();
-            operandStack->pop();
-            int value1 = operandStack->top();
-            operandStack->pop();
+            int value2 = popOperand();
+            int value1 = popOperand();
             if (value1 == value2) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
@@ -607,10 +551,8 @@ void MethodRunner::runInstruction() {
             break;
         }
         case IF_ACMPNE: {
-            int value2 = operandStack->top();
-            operandStack->pop();
-            int value1 = operandStack->top();
-            operandStack->pop();
+            int value2 = popOperand();
+            int value1 = popOperand();
             if (value1 != value2) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
@@ -621,8 +563,7 @@ void MethodRunner::runInstruction() {
             break;
         }
         case IFNONNULL: {
-            int value = operandStack->top();
-            operandStack->pop();
+            int value = popOperand();
             if (value != NULL_REF) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
@@ -633,8 +574,7 @@ void MethodRunner::runInstruction() {
             break;
         }
         case IFNULL: {
-            int value = operandStack->top();
-            operandStack->pop();
+            int value = popOperand();
             if (value == NULL_REF) {
                 int jumpAddr = calculateJumpAddress();
                 jump(jumpAddr);
@@ -744,8 +684,7 @@ void MethodRunner::runInstruction() {
             }
             int *args = new int[numArgs];
             for (int i = numArgs - 1; i >= 0; --i) {
-                int value = operandStack->top();
-                operandStack->pop();
+                int value = popOperand();
                 args[i] = value;
             }
 
@@ -773,10 +712,8 @@ void MethodRunner::runInstruction() {
             break;
         }
         case PUT_FIELD: {
-            int value = operandStack->top();
-            operandStack->pop();
-            int objectRef = operandStack->top();
-            operandStack->pop();
+            int value = popOperand();
+            int objectRef = popOperand();
 
             if (objectRef == NULL_REF) {
                 throw NullPointerException();
@@ -816,8 +753,7 @@ void MethodRunner::runInstruction() {
             break;
         }
         case PUT_STATIC: {
-            int value = operandStack->top();
-            operandStack->pop();
+            int value = popOperand();
 
             uint8_t indexByte1 = next();
             uint8_t indexByte2 = next();
@@ -883,8 +819,7 @@ void MethodRunner::runInstruction() {
             break;
         }
         case GET_FIELD: {
-            int objectRef = operandStack->top();
-            operandStack->pop();
+            int objectRef = popOperand();
 
             if (objectRef == NULL_REF) {
                 throw NullPointerException();
@@ -925,8 +860,7 @@ void MethodRunner::runInstruction() {
             break;
         }
         case NEW_ARRAY: {
-            int count = operandStack->top();
-            operandStack->pop();
+            int count = popOperand();
             //TODO: Check positive count
 
             uint8_t arrayType = next();
@@ -940,8 +874,7 @@ void MethodRunner::runInstruction() {
             break;
         }
         case ARRAY_LENGTH: {
-            int arrayRef = operandStack->top();
-            operandStack->pop();
+            int arrayRef = popOperand();
 
             if (arrayRef == NULL_REF) {
                 throw NullPointerException();
@@ -957,10 +890,8 @@ void MethodRunner::runInstruction() {
         case CA_LOAD: // Fall through
         case SA_LOAD: // Fall through
         case IA_LOAD: {
-            int index = operandStack->top();
-            operandStack->pop();
-            int arrayRef = operandStack->top();
-            operandStack->pop();
+            int index = popOperand();
+            int arrayRef = popOperand();
 
             if (arrayRef == NULL_REF) {
                 throw NullPointerException();
@@ -975,12 +906,9 @@ void MethodRunner::runInstruction() {
         case CA_STORE: // Fall through
         case SA_STORE: // Fall through
         case IA_STORE: {
-            int value = operandStack->top();
-            operandStack->pop();
-            int index = operandStack->top();
-            operandStack->pop();
-            int arrayRef = operandStack->top();
-            operandStack->pop();
+            int value = popOperand();
+            int index = popOperand();
+            int arrayRef = popOperand();
 
             if (arrayRef == NULL_REF) {
                 throw NullPointerException();
@@ -990,8 +918,7 @@ void MethodRunner::runInstruction() {
             break;
         }
         case INTERNAL_PRINTLN: {
-            int stringObjectRef = operandStack->top();
-            operandStack->pop();
+            int stringObjectRef = popOperand();
 
             ObjectRef resultObjectRef = 0;
 
