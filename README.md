@@ -5,7 +5,7 @@ This project started out as a school project and is then something that I have b
 ## Limitations
 Some parts of the JVM specification are not yet implemented. Here is a list of some of the missing features which I aim to implement in the future.
 
-- Not all bytecodes are implemented. For example, double, float and long bytecode instructions are not supported as well as multidimensional array instructions. A full list of unsupported bytecodes is available [here](unsupported_instructions.md). 
+- Not all bytecodes are implemented. For example, double, float and long bytecode instructions are not supported as well as multidimensional array instructions. A full list of unsupported bytecodes is available [here](unsupported_instructions.md). A list of the supported bytecodes is available [here](supported_instructions.md).
 - Modifiers like public, private, final, etc. are ignored since they are not implemented. However, the static modifier is implemented.
 - Since not all bytecodes and modifiers are implemented, the Java base package can not be loaded. Therefore some necessary classes have been implemented in a more basic form and are automatically loaded from the path specified at the environment variable SIMPLE_JVM_INCLUDE_PATH. These are String, StringBuilder, PrintStream, System and Object. 
 - Exceptions are not supported.
