@@ -57,8 +57,6 @@ protected:
     void handleReturn();
 
     int popOperand();
-
-    int readTwoBytes();
 };
 
 class InstructionNotImplementedException : public std::exception {
