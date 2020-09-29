@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 
     ClassFileLookup classFileLookup(classIncludePath);
 
-    auto *operandStack = new std::stack<int>;
+    auto operandStack = std::stack<int>();
 
     ObjectPool objectPool = ObjectPool();
 
@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 
     //Load command line arguments
     int numArgs = argc - 2;
-    int *args = new int[1];
+    auto args = std::vector<int>(1);
     ObjectRef argsArrayRef = objectPool.newObjectRef();
     ClassFile *arrayClassFile = classFileLookup.getClassFile(std::string(BUILTIN_ARRAY_CLASS_NAME));
     objectPool.getObject(argsArrayRef)->initializeArray(arrayClassFile, numArgs);
@@ -46,12 +46,9 @@ int main(int argc, char *argv[]) {
     args[0] = argsArrayRef;
 
     Method *method = lookupStaticMethod("main([Ljava/lang/String;)V", mainClass);
-    MethodRunner methodRunner(method->codeAttribute, mainClass, operandStack, numArgs, args, &stringPool, &objectPool,
+    MethodRunner methodRunner(method->codeAttribute, mainClass, &operandStack, numArgs, args, &stringPool, &objectPool,
                               &classInstantiator, &classFileLookup);
     methodRunner.run();
-
-    delete[] args;
-    delete operandStack;
 
     return 0;
 }

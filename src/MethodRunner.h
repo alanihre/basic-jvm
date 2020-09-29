@@ -23,10 +23,8 @@
 class MethodRunner {
 public:
     MethodRunner(Code_attribute *code, ClassFile *classFile, std::stack<int> *operandStack, int numArgs,
-                 const int *args, StringPool *stringPool, ObjectPool *objectPool, ClassInstantiator *classInstantiator,
+                 const std::vector<int>& args, StringPool *stringPool, ObjectPool *objectPool, ClassInstantiator *classInstantiator,
                  ClassFileLookup *classFileLookup);
-
-    ~MethodRunner();
 
     void run();
 
@@ -36,7 +34,7 @@ protected:
     ObjectPool *objectPool;
     ClassInstantiator *classInstantiator;
     ClassFileLookup *classFileLookup;
-    int *locals;
+    std::vector<int> locals;
     bool shouldReturn = false;
     uint8_t *instructions;
     Code_attribute *code;

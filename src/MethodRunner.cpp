@@ -13,7 +13,7 @@
 #define NULL_REF 0
 
 MethodRunner::MethodRunner(Code_attribute *code, ClassFile *classFile, std::stack<int> *operandStack, int numArgs,
-                           const int *args, StringPool *stringPool, ObjectPool *objectPool,
+                           const std::vector<int>& args, StringPool *stringPool, ObjectPool *objectPool,
                            ClassInstantiator *classInstantiator, ClassFileLookup *classFileLookup) {
     this->operandStack = operandStack;
     this->code = code;
@@ -22,7 +22,7 @@ MethodRunner::MethodRunner(Code_attribute *code, ClassFile *classFile, std::stac
     this->stringPool = stringPool;
     this->classFile = classFile;
     this->classFileLookup = classFileLookup;
-    locals = new int[code->max_locals];
+    locals = std::vector<int>(code->max_locals);
     //Copy arguments
     for (int i = 0; i < numArgs; ++i) {
         locals[i] = args[i];
@@ -682,7 +682,7 @@ void MethodRunner::runInstruction() {
             if (instr == INVOKE_VIRTUAL || instr == INVOKE_SPECIAL) {
                 numArgs++;
             }
-            int *args = new int[numArgs];
+            auto args = std::vector<int>(numArgs);
             for (int i = numArgs - 1; i >= 0; --i) {
                 int value = popOperand();
                 args[i] = value;
@@ -706,8 +706,6 @@ void MethodRunner::runInstruction() {
             MethodRunner methodRunner(method->codeAttribute, method->classFile, operandStack, numArgs, args, stringPool,
                                       objectPool, classInstantiator, classFileLookup);
             methodRunner.run();
-
-            delete[] args;
 
             break;
         }
@@ -955,8 +953,4 @@ int MethodRunner::calculateJumpAddress() {
     //-2 for the two branch bytes and -1 since pc was increased by 1 during the call to next
     int jumpAddr = pc + jumpOffset - 2 - 1;
     return jumpAddr;
-}
-
-MethodRunner::~MethodRunner() {
-    delete[] locals;
 }
