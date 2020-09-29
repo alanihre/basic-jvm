@@ -22,7 +22,7 @@ MethodRunner::MethodRunner(Code_attribute *code, ClassFile *classFile, std::stac
     this->stringPool = stringPool;
     this->classFile = classFile;
     this->classFileLookup = classFileLookup;
-    locals = std::vector<int>(code->max_locals);
+    locals = std::vector<int>(code->max_locals + numArgs);
     //Copy arguments
     for (int i = 0; i < numArgs; ++i) {
         locals[i] = args[i];
