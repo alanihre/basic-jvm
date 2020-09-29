@@ -1,6 +1,6 @@
 # basic-jvm
 This is an implementation of a JVM according to the [Java® Virtual Machine Specification](https://docs.oracle.com/javase/specs/jvms/se7/html/index.html).
-This project started out as a school project and is then something that I have been working on during my free time. It is yet not a complete implementation of the specification and the code needs a bit of structuring and testing.
+This project started out as a school project at KTH and is then something that I have been working on during my free time. It is yet not a complete implementation of the specification and the code needs a bit of structuring and testing.
 
 ## Limitations
 Some parts of the JVM specification are not yet implemented. Here is a list of some of the missing features which I aim to implement in the future.
