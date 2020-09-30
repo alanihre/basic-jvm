@@ -20,7 +20,8 @@ The environment variable SIMPLE_JVM_INCLUDE_PATH must be set to include the base
 ## Improvements
 - Unit tests
 - Array packing. Currently all array elements are casted to int before being stored in the array where they take up the space of an int even if the element stored is of type byte or char. Array elements should be packed according to type.
-- Usage of smart pointers.
+- Garbage collector.
+- Usage of smart pointers in implementation code.
 - Code cleanup. Currently the files and functions are very large and they should be broken up into smaller units.
 - Better error information containing more details about errors that occur, including stack traces with line numbers.
 - Debugging functionality
