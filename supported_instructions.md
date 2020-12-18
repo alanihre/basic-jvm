@@ -70,3 +70,6 @@
 - castore
 - saload
 - sastore
+- aaload
+- aastore
+- anewarray

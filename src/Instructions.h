@@ -110,10 +110,13 @@
 #define BA_LOAD 0x33
 #define CA_LOAD 0x34
 #define SA_LOAD 0x35
+#define AA_LOAD 0x32
 #define IA_STORE 0x4f
 #define BA_STORE 0x54
 #define CA_STORE 0x55
 #define SA_STORE 0x56
+#define AA_STORE 0x53
 #define INTERNAL_PRINTLN 0xfd
+#define A_NEW_ARRAY 0xbd
 
 #endif //BASIC_JVM_INSTRUCTIONS_H

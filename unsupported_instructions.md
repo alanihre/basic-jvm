@@ -71,9 +71,6 @@
 - multianewarray
 - tableswitch
 - wide
-- aaload
-- aastore
-- anewarray
 - instanceof
 - invokedynamic
 - invokeinterface

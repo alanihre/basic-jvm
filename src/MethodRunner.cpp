@@ -871,6 +871,23 @@ void MethodRunner::runInstruction() {
             operandStack->push(objectRef);
             break;
         }
+        case A_NEW_ARRAY: {
+            int count = popOperand();
+            //TODO: Check positive count
+
+            uint8_t indexByte1 = next();
+            uint8_t indexByte2 = next();
+
+            //TODO: Check class type and allocate memory for all class elements in array. Currently memory is allocated when the classes are constructed.
+
+            ObjectRef objectRef = objectPool->newObjectRef();
+
+            ClassFile *arrayClassFile = classFileLookup->getClassFile(std::string(BUILTIN_ARRAY_CLASS_NAME));
+            objectPool->getObject(objectRef)->initializeArray(arrayClassFile, count);
+
+            operandStack->push(objectRef);
+            break;
+        }
         case ARRAY_LENGTH: {
             int arrayRef = popOperand();
 
@@ -887,6 +904,7 @@ void MethodRunner::runInstruction() {
         case BA_LOAD: // Fall through
         case CA_LOAD: // Fall through
         case SA_LOAD: // Fall through
+        case AA_LOAD: // Fall through
         case IA_LOAD: {
             int index = popOperand();
             int arrayRef = popOperand();
@@ -903,6 +921,7 @@ void MethodRunner::runInstruction() {
         case BA_STORE: // Fall through
         case CA_STORE: // Fall through
         case SA_STORE: // Fall through
+        case AA_STORE: // Fall through
         case IA_STORE: {
             int value = popOperand();
             int index = popOperand();
